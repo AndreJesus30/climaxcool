@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block body %}
+
+<div class="container bg-dark " style="min-height: 1000px;">
+    <div class="py-2 text-center">
+        <img class="d-block mx-auto mt-2 mb-3 rounded-circle border border-secondary" src="static/images/logo_climax_cool.jfif" alt="" width="84" height="84">
+        <div class="pb-2">
+            <Button type="button" class="btn btn-outline-secondary mr-2" data-toggle="button" onclick="window.location.href='/'">Histórico</Button>
+            <Button type="button" class="btn btn-outline-info">Novo Serviço</Button>
+        </div>
+    </div>
+    <div class="container text-center text-light">
+        <div class=" text-left text-light">
+            <div class="row">
+                <div class="col-8">
+                    <span>Nome Cliente:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span>RG:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-left text-light">
+            <div class="col">
+                <span>Equipamento:</span>
+                <div class="bg-light rounded mt-1">
+                    <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2 text-left">
+            <span>Serviços:</span>
+            <div class="mt-1">
+                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
+                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Limpeza e higienização</span>
+                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
+                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Calibragem</span>
+                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Outros</span>
+                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Troca</span>
+                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Etc...</span>
+                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Etc...</span>
+                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Etc...</span>
+            </div>
+        </div>
+        <div class="text-left text-light">
+            <span>Observações:</span>
+            <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
+        </div>
+
+        <!-- style="display: flex; gap: 12px; -->
+        <div class="text-left text-light">
+            <div class="row">
+                <div class="col-8">
+                    <span>Técnico:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <span>Preço:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <button style="color:black; background-color: rgb(0, 120, 141) ; font-size: 1.1rem; width: 100%;" type="button" class="btn badge-pill py-1 px-3 mr-1">SALVAR</button>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
