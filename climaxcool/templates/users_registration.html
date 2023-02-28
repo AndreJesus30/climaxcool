@@ -1,0 +1,45 @@
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div class="d-flex justify-content-center align-items-center bg-dark" style="height: 85vh;">
+    <div class="bg-dark text-white">
+        <div class="col">
+            <div>
+                <form method="POST" action="" class="border p-4 mt-2 mb-2">
+                    {{ form_users.csrf_token }}
+                    <legend class="text-center">Cadastro de Usuários</legend>
+                    <fieldset>
+                        <!-- {{ form_users.type_user.label(class="row mx-1") }} -->
+                        <div style="font-size: 16px;" class="text-center">
+                            {% for subfield in form_users.type_user %}
+                            <tr>
+                                <td>{{ subfield(style="height: 12px;") }}</td>
+                                <td>{{ subfield.label(class="my-2 mx-2") }}</td>
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.number_rg.label(class="form-label") }}
+                            {{ form_users.number_rg(class="form-control", placeholder="99999") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.name_user.label(class="form-label") }}
+                            {{ form_users.name_user(class="form-control", placeholder="nome") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.email.label(class="form-label") }}
+                            {{ form_users.email(class="form-control", placeholder="exemplo@gmail.com") }}
+                        </div>
+                    </fieldset>
+                    <div class="w-auto">
+                        {{ form_users.btn_submit_user_registration(class="w-100 btn btn-primary mt-4 mb-2") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

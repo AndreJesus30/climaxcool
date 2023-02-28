@@ -1,0 +1,30 @@
+{% extends 'index.html'%}
+
+{% block body %}
+
+<ul class="nav justify-content-center bg-dark py-3 mb-1">
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('home') }}">Climax Cool</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('customers_registration') }}">Cadastrar Clientes</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('users_registration') }}">Cadastrar Usuários</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('home') }}">Sair</a>
+    </li>
+</ul>
+
+{% block bodynav %}
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div class="d-flex justify-content-center align-items-center bg-dark" style="height: 85vh;">
+    <div class="bg-dark text-white">
+        <div class="col">
+            <div>
+                <form method="POST" action="" class="border p-4 mt-2 mb-2">
+                    {{ form_customer.csrf_token }}
+                    <legend class="text-center">Cadastro de Cliente</legend>
+                    <fieldset>
+                        <!-- {{ form_customer.type_customer.label(class="row mx-1") }} -->
+                        <div style="font-size: 16px;" class="text-center">
+                            {% for subfield in form_customer.type_customer %}
+                            <tr>
+                                <td>{{ subfield(style="height: 12px;") }}</td>
+                                <td>{{ subfield.label(class="my-2 mx-2") }}</td>
+                            </tr>
+                            {% endfor %}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.number_cnpj.label(class="form-label") }}
+                            {{ form_customer.number_cnpj(class="form-control", placeholder="99.999.999/9999-99") }}
+                        </div>
+
+                        <!-- <div class="form-group mt-1 mx-1">
+                                {{ form_customer.number_cpf.label(class="form-label") }}
+                                {{ form_customer.number_cpf(class="form-control") }}
+                            </div> -->
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.name_company.label(class="form-label") }}
+                            {{ form_customer.name_company(class="form-control") }}
+                        </div>
+
+
+                        <!-- <div class="form-group mt-1 mx-1">
+                                {{ form_customer.name_customer.label(class="form-label") }}
+                                {{ form_customer.name_customer(class="form-control") }}
+                            </div> -->
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.email.label(class="form-label") }}
+                            {{ form_customer.email(class="form-control", placeholder="exemplo@gmail.com") }}
+                        </div>
+
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.address.label(class="form-label") }}
+                            {{ form_customer.address(class="form-control", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.referencePoint.label(class="form-label") }}
+                            {{ form_customer.referencePoint(class="form-control w-100", rows="1") }}
+                        </div>
+                    </fieldset>
+                    <div class="w-auto">
+                        {{ form_customer.btn_submit_customer(class="w-100 btn btn-primary mt-4 mb-2") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
