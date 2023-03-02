@@ -1,12 +1,64 @@
 {% extends 'nav_logged.html' %}
 
 {% block bodynav %}
-<h1>Dashboard</h1>
+<!-- <h1>Dashboard</h1>
 <h2>Clientes</h2>
 <p>buscar clientes</p>
-<p>Relatório de Serviços e Novo Serviço</p>
-<h2>Usuários</h2>
+<p>Relatório de Serviços e Novo Serviço</p> -->
+<!-- <h2>Usuários</h2>
 <p>busca de usuários</p>
-<p>ativar / inativar</p>
+<p>ativar / inativar</p> -->
+<div style="padding-top: 70px; height: 100vh;" class="container-fluid bg-dark">
+    <div class="container">
+        <div class="row text-center p-3">
+            <div class="col-6 mb-2 pr-1">
+                <button type="button" class="btn btn-primary btn-lg w-100">Clientes</button>
+            </div>
+            <div class="col-6 mb-2 pl-0">
+                <button type="button" class="btn btn-primary btn-lg w-100">Usuários</button>
+            </div>
+
+            <div class="col-12 mb-2 ">
+                <div class="">
+                    <select class="custom-select">
+                        <option selected>Pesquisar cliente</option>
+                        <option value="Todos">Todos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12 mb-4">
+                <form class="col-12">
+                    <div class="row">
+                        <input class="col-8 form-control" type="search" placeholder="Digite um nome" aria-label="Pesquisar">
+                        <button class="col-4 btn btn-outline-success " type="submit">Pesquisar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 mb-2">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Título do card</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Subtitulo do card</h6>
+                        <a href="#" class="card-link">Link do card</a>
+                        <a href="#" class="card-link">Outro link</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">Título do card</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Subtitulo do card</h6>
+                        <a href="#" class="card-link">Link do card</a>
+                        <a href="#" class="card-link">Outro link</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
