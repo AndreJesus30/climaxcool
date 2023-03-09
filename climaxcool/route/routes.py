@@ -70,24 +70,42 @@ def users_registration():
     return render_template('users_registration.html', form_users=form_users)
 
 
-@app.route('/imprimir')
-def imprimir():
-    print("imprimiu certo")
-    generate_code.createCode(list_images)
+@app.route('/qr-code')
+def qr_code():
+    # print("imprimiu certo")
+    # gerador_qr_codes = generate_code.createCode(list_images, 0)
     print(list_images)
-    return redirect(url_for('generateQrCode'))
+    return render_template('qr_code.html', list_images=list_images)
 
 
-@app.route('/dashboard/cliente/novo_serviço')
+@app.route('/generate-qrcode/<qtde>')
+def generate_qrcode(qtde):
+    print("imprimiu certo")
+    qtde_to_int = int(qtde)
+    generate_code.createCode(list_images, qtde_to_int)
+    print(list_images)
+    return redirect(url_for('qr_code'))
+
+
+@app.route('/dashboard/cliente/servicos')
+def equipment_summary():
+    return render_template('summary_equipments.html')
+
+
+@app.route('/dashboard/cliente/novo-servico')
 def newService():
     return render_template('new_service.html')
 
 
-@app.route('/dashboard/cliente/relatorio-serviço')
+@app.route('/dashboard/cliente/relatorio-servico')
 def report_service():
     return render_template('report_service.html')  
 
 
+
+#mudar nome do método e do template 
+#(método algo como equipment_services)
+#(template mesmo nome)
 @app.route('/cliente/equipamento', defaults={"codigo": "-1"})
 @app.route('/cliente/equipamento/<codigo>')
 def equipmentSummary(codigo):

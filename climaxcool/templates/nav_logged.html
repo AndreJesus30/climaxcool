@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<nav class="navbar navbar-expand-md navbar-light bg-dark fixed-top">
+<nav class="box-shadow navbar navbar-expand-md navbar-light bg-dark fixed-top">
     <div class="margin-nav d-flex-md justify-content-center" id="div-nav-title">
         <a class="navbar-brand d-block d-md-none" href="#" id="nav-title">Pagina Atual</a>
     </div>
@@ -10,9 +10,9 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="margin-nav d-flex-md justify-content-center  collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+        <ul id="list-nav" class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a id="home" class="nav-link" href="{{ url_for('home') }}">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
@@ -24,6 +24,9 @@
                 <a class="nav-link" href="{{ url_for('users_registration') }}">Cadastrar Usuários</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('qr_code') }}">Gerar QR Codes</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('home') }}">Sair</a>
             </li>
         </ul>
@@ -33,18 +36,26 @@
 
 <script>
     // Obtenha o título da página atual
-    var pathname = window.location.pathname;
-    var parts = pathname.split("/");
-    var endpoint = parts[parts.length - 1];
-    console.log(endpoint);
+    // var pathname = window.location.pathname;
+    // var parts = pathname.split("/");
+    // var endpoint = parts[parts.length - 1];
+    // console.log(endpoint);
+    // var titlePrincipal = document.getElementById("nav-title")
+    //titlePrincipal.textContent = endpoint;
 
-    // Atualize o texto do elemento nav-title
-    document.getElementById("nav-title").textContent = endpoint;
-    // let size = window.innerWidth;
-    // if (size > 991) {
-    //     document.getElementById("div-nav-title").classList.add("invisible")
-    // }
-    // console.log(window.innerWidth)
+    var titlePrincipal = document.getElementById("nav-title")
+    var myList = document.getElementById("list-nav"); // obtém a tag ul
+    var listItems = myList.getElementsByTagName("a");
+    var list = Array.from(listItems);
+    console.log(list)
+
+    list.forEach((e, i, array) => {
+        console.log(e.href)
+        if (e.href == window.location.href) {
+            titlePrincipal.textContent = e.textContent
+        }
+    }
+    )
 </script>
 
 {% block bodynav %}

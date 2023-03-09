@@ -9,16 +9,19 @@
 <p>busca de usuários</p>
 <p>ativar / inativar</p> -->
 <div style="padding-top: 70px; height: 100vh;" class="container-fluid bg-dark">
+
     <div class="container">
-        <div class="row text-center p-3">
-            <div class="col-6 mb-2 pr-1">
+        <div class="row text-center justify-content-center p-1">
+            <div class="col-6 col-lg-3 mb-2 pr-1">
                 <button type="button" class="btn btn-primary btn-lg w-100">Clientes</button>
             </div>
-            <div class="col-6 mb-2 pl-0">
+            <div class="col-6 col-lg-3 mb-2 pl-0">
                 <button type="button" class="btn btn-primary btn-lg w-100">Usuários</button>
             </div>
 
-            <div class="col-12 mb-2 ">
+        </div>
+        <div class="row text-center justify-content-center p-1">
+            <div class="col-12 col-lg-6 mb-2 mr-1 ">
                 <div class="">
                     <select class="custom-select">
                         <option selected>Pesquisar cliente</option>
@@ -26,39 +29,114 @@
                     </select>
                 </div>
             </div>
-            <div class="col-12 mb-4">
-                <form class="col-12">
-                    <div class="row">
-                        <input class="col-8 form-control" type="search" placeholder="Digite um nome" aria-label="Pesquisar">
-                        <button class="col-4 btn btn-outline-success " type="submit">Pesquisar</button>
+            <div class="col-12 col-lg-6 mb-4 mr-1">
+                <!-- <form class="col-12">
+                        <div class="row">
+                            <input class="col-8 form-control" type="search" placeholder="Digite um nome" aria-label="Pesquisar">
+                            <button class="col-4 btn btn-outline-success " type="submit">Pesquisar</button>
+                        </div>
+                    </form> -->
+                <form action="">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2">Pesquisar</button>
+                        </div>
                     </div>
                 </form>
             </div>
+        </div>
 
-            <div class="col-12 mb-2">
+
+        <div class="row justify-content-center ">
+            <div class="col-lg-6">
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-0">Papelaria Tributária</button>
+            </div>
+        </div>
+        <div class="row justify-content-center px-1">
+            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-0">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Título do card</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Subtitulo do card</h6>
-                        <a href="#" class="card-link">Link do card</a>
-                        <a href="#" class="card-link">Outro link</a>
+                        <p class="card-title">CNPJ: 112.456.897/0001-54</p>
+                        <p class="card-subtitle mb-2 text-muted">Telefone: 62 99999-8798</p>
+                        <p class="card-subtitle mb-4 text-muted">Email: tributaria@gmail.com</p>
+                        <div class="row justify-content-center">
+                            <a href="{{ url_for('equipment_summary') }}" class="card-link">Serviços</a>
+                            <a href="#" class="card-link">Detalhes</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12">
+        <div class="row justify-content-center ">
+            <div class="col-lg-6">
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-1">Doce Paladar</button>
+            </div>
+        </div>
+        <div class="row justify-content-center px-1">
+            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-1">
                 <div class="card" style="width: 100%;">
                     <div class="card-body">
-                        <h5 class="card-title">Título do card</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Subtitulo do card</h6>
-                        <a href="#" class="card-link">Link do card</a>
-                        <a href="#" class="card-link">Outro link</a>
+                        <p class="card-title">CNPJ: 112.456.897/0001-54</p>
+                        <p class="card-subtitle mb-2 text-muted">Telefone: 62 99999-8798</p>
+                        <p class="card-subtitle mb-4 text-muted">Email: tributaria@gmail.com</p>
+                        <div class="row justify-content-center">
+                            <a href="#" class="card-link">Serviços</a>
+                            <a href="#" class="card-link">Detalhes</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
+        <div class="row justify-content-center ">
+            <div class="col-lg-6">
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-2">Comunidade Cristã</button>
+            </div>
+        </div>
+        <div class="row justify-content-center px-1">
+            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-2">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <p class="card-title">CNPJ: 112.456.897/0001-54</p>
+                        <p class="card-subtitle mb-2 text-muted">Telefone: 62 99999-8798</p>
+                        <p class="card-subtitle mb-4 text-muted">Email: tributaria@gmail.com</p>
+                        <div class="row justify-content-center">
+                            <a href="#" class="card-link">Serviços</a>
+                            <a href="#" class="card-link">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center ">
+            <div class="col-lg-6">
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-3">Gaza Auto Car</button>
+            </div>
+        </div>
+        <div class="row justify-content-center px-1">
+            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-3">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <p class="card-title">CNPJ: 112.456.897/0001-54</p>
+                        <p class="card-subtitle mb-2 text-muted">Telefone: 62 99999-8798</p>
+                        <p class="card-subtitle mb-4 text-muted">Email: tributaria@gmail.com</p>
+                        <div class="row justify-content-center">
+                            <a href="#" class="card-link">Serviços</a>
+                            <a href="#" class="card-link">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 </div>
+</div>
+
 
 {% endblock %}
