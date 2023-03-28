@@ -87,13 +87,16 @@ def generate_qrcode(qtde):
     return redirect(url_for('qr_code'))
 
 
-@app.route('/dashboard/cliente/servicos')
-def equipment_summary():
-    return render_template('summary_equipments.html')
+@app.route('/dashboard/cliente/servicos/<customer_id>')
+def equipment_summary(customer_id):
+    customer_name = "";
+    if customer_id == "1":
+        customer_name = "Papelaria Tributária";
+    return render_template('summary_equipments.html',  customer_name=customer_name)
 
 
 @app.route('/dashboard/cliente/novo-servico')
-def newService():
+def new_service():
     return render_template('new_service.html')
 
 

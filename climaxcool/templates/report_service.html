@@ -1,24 +1,15 @@
-{% extends 'index.html' %}
+{% block title %} Serviços {% endblock %}
+{% extends 'nav_logged.html' %}
 
-{% block title %} Inicio {% endblock %}
+{% block bodynav %}
 
-{% block body %}
 
-<div class="container bg-dark " style="min-height: 1000px;">
+<div class="container bg-dark" style="padding-top: 60px; height: 100vh;">
     <div class="py-2 text-center">
-        <img class="d-block mx-auto mt-2 mb-2 rounded-circle" src="static/images/logo_climax_cool.jfif" alt="" width="84" height="84">
-        <h2 class="pb-2">Relatório de Serviço</h2>
+        <!-- <h2 class="pb-2">Relatório de Serviço</h2> -->
         <div class="pb-2">
-            <Button type="button" class="btn btn-outline-secondary mr-2" data-toggle="button">Histórico</Button>
-            <Button type="button" class="btn btn-outline-info" onclick="window.location.href='/novo_serviço'">Novo Serviço</Button>
-            <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-outline-secondary mr-2 active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> Histórico
-                </label>
-                <label class="btn btn-outline-info">
-                    <input onclick="window.location.href='/novo_serviço'" type="radio" name="options" id="option2" autocomplete="off"> Novo Serviço
-                </label>
-            </div> -->
+            <a id="btn-historico" class="btn btn-outline-secondary mr-2" href="{{url_for('report_service')}}">Histórico</a>
+            <a id="btn-novo-servico" class="btn btn-outline-info mr-2" href="{{url_for('new_service')}}">Novo Serviço</a>
         </div>
     </div>
     <div class="container text-center text-light" id="option1">
@@ -29,92 +20,113 @@
                 Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V
             </p>
         </div>
-        <button style="width: 100%; text-align: start;" class="btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-1"> Dia 18/02/2023 - 16:30</button>
+    </div>
+    <div class="container row justify-content-center text-center text-light mx-0">
+        <div class="col-md-7 mb-1">
+            <button style="width: 100%; text-align: start;" class="btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-1"> Dia 18/02/2023 - 16:30</button>
 
-        <div class="collapse mt-1 card bg-secondary py-3" id="collapse-info-1">
-            <div class="mb-2">
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Limpeza e higienização</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Calibragem</span>
-            </div>
-            <div class="container text-left text-light">
-                <span>Observações:</span>
-                <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
-            </div>
+            <div class="collapse my-1 card bg-secondary py-3" id="collapse-info-1">
+                <div class="mb-2">
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Limpeza e higienização</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Calibragem</span>
+                </div>
+                <div class="container text-left text-light">
+                    <span>Observações:</span>
+                    <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
+                </div>
 
-            <!-- style="display: flex; gap: 12px; -->
-            <div class="container text-left text-light">
-                <div class="row">
-                    <div class="col-8">
-                        <span>Técnico:</span>
-                        <div class="bg-light rounded mt-1">
-                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                <!-- style="display: flex; gap: 12px; -->
+                <div class="container text-left text-light">
+                    <div class="row">
+                        <div class="col-8">
+                            <span>Técnico:</span>
+                            <div class="bg-light rounded mt-1">
+                                <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-4">
-                        <span>Preço:</span>
-                        <div class="bg-light rounded mt-1">
-                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                        <div class="col-4">
+                            <span>Preço:</span>
+                            <div class="bg-light rounded mt-1">
+                                <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-3 container text-right">
-                <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3 mr-1">Editar</button>
-                <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3">Excluir</button>
+                <div class="mt-3 container text-right">
+                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3 mr-1">Editar</button>
+                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3">Excluir</button>
+                </div>
             </div>
         </div>
 
 
 
+        <div class="col-md-7 mb-1">
+            <button style="width: 100%; text-align: start;" class="btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-2"> Dia 15/02/2023 - 09:45 </button>
 
+            <div class="collapse my-1 card bg-secondary py-3" id="collapse-info-2">
+                <div class="mb-2">
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Limpeza e higienização</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
+                    <span class="badge badge-pill badge-info py-2 px-3 mb-2">Calibragem</span>
+                </div>
+                <div class="container text-left text-light">
+                    <span>Observações:</span>
+                    <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
+                </div>
 
-
-
-        <button style="width: 100%; text-align: start;" class="btn btn-outline-secondary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-2"> Dia 15/02/2023 - 09:45 </button>
-
-        <div class="collapse mt-1 card bg-secondary py-3" id="collapse-info-2">
-            <div class="mb-2">
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Limpeza e higienização</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Calibragem</span>
-            </div>
-            <div class="container text-left text-light">
-                <span>Observações:</span>
-                <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
-            </div>
-
-            <!-- style="display: flex; gap: 12px; -->
-            <div class="container text-left text-light">
-                <div class="row">
-                    <div class="col-8">
-                        <span>Técnico:</span>
-                        <div class="bg-light rounded mt-1">
-                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                <!-- style="display: flex; gap: 12px; -->
+                <div class="container text-left text-light">
+                    <div class="row">
+                        <div class="col-8">
+                            <span>Técnico:</span>
+                            <div class="bg-light rounded mt-1">
+                                <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-4">
-                        <span>Preço:</span>
-                        <div class="bg-light rounded mt-1">
-                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                        <div class="col-4">
+                            <span>Preço:</span>
+                            <div class="bg-light rounded mt-1">
+                                <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mt-3 container text-right">
-                <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3 mr-1">Editar</button>
-                <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3">Excluir</button>
+                <div class="mt-3 container text-right">
+                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3 mr-1">Editar</button>
+                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3">Excluir</button>
+                </div>
             </div>
         </div>
-
 
     </div>
 </div>
 
+<script>
 
+    var historicoBtn = document.getElementById('btn-historico');
+    var novoServicoBtn = document.getElementById('btn-novo-servico');
+
+    console.log(historicoBtn)
+    if (document.baseURI.endsWith('relatorio-servico')) {
+        novoServicoBtn.classList.remove('btn-outline-info');
+        novoServicoBtn.classList.add('btn-outline-secondary');
+        historicoBtn.classList.remove('btn-outline-secondary');
+        historicoBtn.classList.add('btn-outline-info');
+    }
+
+    if (document.baseURI.endsWith('novo-servico')) {
+        historicoBtn.classList.remove('btn-outline-info');
+        historicoBtn.classList.add('btn-outline-secondary');
+        novoServicoBtn.classList.remove('btn-outline-secondary');
+        novoServicoBtn.classList.add('btn-outline-info');
+
+    }
+</script>
 
 {% endblock %}

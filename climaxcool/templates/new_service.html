@@ -4,33 +4,32 @@
 
 {% block body %}
 
-<div class="container bg-dark " style="min-height: 1000px;">
-    <div class="py-2 text-center">
-        <img class="d-block mx-auto mt-2 mb-3 rounded-circle border border-secondary" src="static/images/logo_climax_cool.jfif" alt="" width="84" height="84">
+<div class="container bg-dark">
+    <div class=" py-2 text-center">
         <div class="pb-2">
-            <Button type="button" class="btn btn-outline-secondary mr-2" data-toggle="button" onclick="window.location.href='/'">Histórico</Button>
-            <Button type="button" class="btn btn-outline-info">Novo Serviço</Button>
+            <a id="btn-historico" class="btn btn-outline-secondary mr-2" href="{{url_for('report_service')}}">Histórico</a>
+            <a id="btn-novo-servico" class="btn btn-outline-info mr-2" href="{{url_for('new_service')}}">Novo Serviço</a>
         </div>
     </div>
     <div class="container text-center text-light">
         <div class=" text-left text-light">
-            <div class="row">
-                <div class="col-8">
+            <div class="row justify-content-center">
+                <div class="col-8 col-md-4">
                     <span>Nome Cliente:</span>
                     <div class="bg-light rounded mt-1">
                         <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 col-md-2">
                     <span>RG:</span>
                     <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">5552036</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row text-left text-light">
-            <div class="col">
+        <div class="row justify-content-center text-left text-light">
+            <div class="col col-md-6">
                 <span>Equipamento:</span>
                 <div class="bg-light rounded mt-1">
                     <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V</p>
@@ -38,7 +37,7 @@
             </div>
         </div>
 
-        <div class="mb-2 text-left">
+        <!-- <div class="mb-2 text-left">
             <span>Serviços:</span>
             <div class="mt-1">
                 <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
@@ -51,22 +50,48 @@
                 <span class="badge badge-pill badge-info py-2 px-3 mb-2">Etc...</span>
                 <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Etc...</span>
             </div>
+        </div> -->
+        <div class="row justify-content-center mb-3 text-left">
+            <div class=" col-md-6">
+                <ul class="list-group">
+                    <span>Serviços:</span>
+                    <li class="list-group-item small mt-1" id="servicos">
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Instalação</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Desmontagem</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Preventiva</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Corretiva</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Química</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Limpeza de Filtro</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Desobstrução de Dreno</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Carga de Gás</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Reparo na Placa Eletrônica</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. de Capacitor</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Modo Ventilador Interno</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Modo Ventilador Externo</span>
+                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Compressor</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="text-left text-light">
-            <span>Observações:</span>
-            <div style="height: 100px;" class="bg-light mb-2 mt-1 rounded"></div>
+        <!-- <div class="mt-3 small">
+            <p>Serviços selecionados: <span id="selecionados"></span></p>
+        </div> -->
+        <div class="row justify-content-center">
+            <div class="text-left text-light col-md-6">
+                <span>Observações:</span>
+                <div style="height: 100px;" class="bg-light mb-3 mt-1 rounded"></div>
+            </div>
         </div>
 
-        <!-- style="display: flex; gap: 12px; -->
         <div class="text-left text-light">
-            <div class="row">
-                <div class="col-8">
+            <div class="row justify-content-center">
+                <div class="col-8 col-md-4">
                     <span>Técnico:</span>
                     <div class="bg-light rounded mt-1">
                         <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-4 col-md-2">
                     <span>Preço:</span>
                     <div class="bg-light rounded mt-1">
                         <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
@@ -74,13 +99,56 @@
                 </div>
             </div>
         </div>
-
-        <div class="mt-5">
-            <button style="color:black; background-color: rgb(0, 120, 141) ; font-size: 1.1rem; width: 100%;" type="button" class="btn badge-pill py-1 px-3 mr-1">SALVAR</button>
+        <div class="row justify-content-center pb-3 mb-3">
+            <div class="col-md-6 mt-5">
+                <button style="color:black; background-color: rgb(0, 120, 141) ; font-size: 1.1rem; width: 100%;" type="button" class="btn badge-pill py-1 px-3 mr-1">SALVAR</button>
+            </div>
         </div>
     </div>
 </div>
 
 
+<script>
+    const servicos = document.querySelectorAll('.servico');
+    const selecionados = new Set();
+    const selecionadosElement = document.querySelector('#selecionados');
+
+    function atualizarSelecionados() {
+        selecionadosElement.innerHTML = [...selecionados].join(', ');
+    }
+
+    servicos.forEach(servico => {
+        servico.addEventListener('click', () => {
+            servico.classList.toggle('badge-info');
+            if (selecionados.has(servico.textContent)) {
+                selecionados.delete(servico.textContent);
+            } else {
+                selecionados.add(servico.textContent);
+            }
+            atualizarSelecionados();
+        });
+    });
+
+    var historicoBtn = document.getElementById('btn-historico');
+    var novoServicoBtn = document.getElementById('btn-novo-servico');
+
+    console.log(historicoBtn)
+    if (document.baseURI.endsWith('relatorio-servico')) {
+        novoServicoBtn.classList.remove('btn-outline-info');
+        novoServicoBtn.classList.add('btn-outline-secondary');
+        historicoBtn.classList.remove('btn-outline-secondary');
+        historicoBtn.classList.add('btn-outline-info');
+    }
+
+    if (document.baseURI.endsWith('novo-servico')) {
+        historicoBtn.classList.remove('btn-outline-info');
+        historicoBtn.classList.add('btn-outline-secondary');
+        novoServicoBtn.classList.remove('btn-outline-secondary');
+        novoServicoBtn.classList.add('btn-outline-info');
+
+    }
+
+
+</script>
 
 {% endblock %}
