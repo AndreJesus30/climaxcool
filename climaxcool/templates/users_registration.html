@@ -21,16 +21,24 @@
                             {% endfor %}
                         </div>
                         <div class="row form-group mt-1 mx-1">
-                            {{ form_users.number_rg.label(class="form-label") }}
-                            {{ form_users.number_rg(class="form-control", placeholder="99999") }}
-                        </div>
-                        <div class="row form-group mt-1 mx-1">
-                            {{ form_users.name_user.label(class="form-label") }}
-                            {{ form_users.name_user(class="form-control", placeholder="nome") }}
+                            {{ form_users.username.label(class="form-label") }}
+                            {{ form_users.username(class="form-control", placeholder="nome") }}
                         </div>
                         <div class="row form-group mt-1 mx-1">
                             {{ form_users.email.label(class="form-label") }}
                             {{ form_users.email(class="form-control", placeholder="exemplo@gmail.com") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.password.label(class="form-label") }}
+                            {{ form_users.password(class="form-control") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.password_check.label(class="form-label") }}
+                            {{ form_users.password_check(class="form-control") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.permission_user.label(class="form-label") }}
+                            {{ form_users.permission_user(class="form-control") }}
                         </div>
                     </fieldset>
                     <div class="w-auto">

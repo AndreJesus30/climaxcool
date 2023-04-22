@@ -1,0 +1,19 @@
+Pesquisar Admin para visualizar bancos SQL
+- DB Browser for sqlite
+
+
+CRIAR NOVO USUÁRIO:
+
+INSERT INTO "main"."Customer"
+("id", "type_customer", "number_register_customer", "name_customer", "name_responsible", "email", "address", "telephone_fixed", "telephone_mobile", "reference_point", "id_user")
+VALUES (4, 'Pessoa Física', '222.222.222-22', 'Maria das flores', 'Maria', 'maria@gmail.com', 'rua 75 jd. goias', '62 32823834', '62 985419632', 'perto da feira', 1);
+
+
+ESCREVER SCRIPTS PADRÃO PARA EXECUTAR NO TERMINAL
+
+
+Permissionamento
+0 - Somente visualizar
+1 - Cadastrar / Editar / Visualizar
+2 - Cadastrar / Editar / Excluir / Visualizar
+3 - Admin

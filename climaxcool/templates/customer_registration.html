@@ -3,7 +3,7 @@
 {% block bodynav %}
 
 
-<div class="d-flex justify-content-center align-items-center bg-dark" style="padding-top: 70px; height: 100vh;">
+<div class="d-flex justify-content-center align-items-center bg-dark" style="padding-top: 70px;">
     <div class="bg-dark text-white">
         <div class="col">
             <div>
@@ -21,27 +21,36 @@
                             {% endfor %}
                         </div>
                         <div class="row form-group mt-1 mx-1">
-                            {{ form_customer.number_cnpj.label(class="form-label") }}
-                            {{ form_customer.number_cnpj(class="form-control", placeholder="99.999.999/9999-99") }}
+                            <div>
+                                <label for="number_register_customer" id="label-type-client">CNPJ</label>
+                            </div>
+                            {{ form_customer.number_register_customer(id="number_register_customer", class="form-control", placeholder="999.999.999/9999-99", maxlength="26",) }}
                         </div>
 
-                        <!-- <div class="form-group mt-1 mx-1">
-                                {{ form_customer.number_cpf.label(class="form-label") }}
-                                {{ form_customer.number_cpf(class="form-control") }}
-                            </div> -->
                         <div class="row form-group mt-1 mx-1">
-                            {{ form_customer.name_company.label(class="form-label") }}
-                            {{ form_customer.name_company(class="form-control") }}
+                            <div>
+                                <label for="name_generic" id="label-name-generic">Nome Fantasia</label>
+                            </div>
+                            {{ form_customer.name_customer(id="name_generic", class="form-control") }}
                         </div>
 
+                        <div class="form-group mt-1 mx-1">
+                            {{ form_customer.name_responsible.label(id='label-name-responsible', class="form-label") }}
+                            {{ form_customer.name_responsible(class="form-control") }}
+                        </div>
 
-                        <!-- <div class="form-group mt-1 mx-1">
-                                {{ form_customer.name_customer.label(class="form-label") }}
-                                {{ form_customer.name_customer(class="form-control") }}
-                            </div> -->
                         <div class="row form-group mt-1 mx-1">
                             {{ form_customer.email.label(class="form-label") }}
+                            {% if form_customer.email.errors %}
+                            {{ form_customer.email(class="form-control is-invalid", placeholder="exemplo@gmail.com") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form_customer.email.errors %}
+                                E-mail inválido
+                                {% endfor %}
+                            </div>
+                            {% else %}
                             {{ form_customer.email(class="form-control", placeholder="exemplo@gmail.com") }}
+                            {% endif %}
                         </div>
 
                         <div class="row form-group mt-1 mx-1">
@@ -49,8 +58,18 @@
                             {{ form_customer.address(class="form-control", rows="1") }}
                         </div>
                         <div class="row form-group mt-1 mx-1">
-                            {{ form_customer.referencePoint.label(class="form-label") }}
-                            {{ form_customer.referencePoint(class="form-control w-100", rows="1") }}
+                            {{ form_customer.reference_point.label(class="form-label") }}
+                            {{ form_customer.reference_point(class="form-control w-100", rows="1") }}
+                        </div>
+
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.telephone_fixed.label(class="form-label") }}
+                            {{ form_customer.telephone_fixed(class="form-control w-100", rows="1") }}
+                        </div>
+
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.telephone_mobile.label(class="form-label") }}
+                            {{ form_customer.telephone_mobile(class="form-control w-100", rows="1") }}
                         </div>
                     </fieldset>
                     <div class="w-auto">
@@ -61,5 +80,6 @@
         </div>
     </div>
 </div>
+
 
 {% endblock %}
