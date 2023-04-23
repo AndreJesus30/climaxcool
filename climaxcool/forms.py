@@ -39,5 +39,5 @@ class FormUsersRegistration(FlaskForm):
     permission_user = StringField('Permissão', validators=[DataRequired()]) 
     #status_user = StringField('Status Usuário', validators=[DataRequired()])
     #fazer vinculo do texto com o numero da permissão 0, 1, 2..
-    #customer = StringField('Empresa', validators=[DataRequired()])
+    #company = StringField('Empresa', validators=[DataRequired()])
     btn_submit_user_registration = SubmitField('Cadastrar Usuário')

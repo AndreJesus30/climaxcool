@@ -5,10 +5,10 @@
     <div class="container">
         <div class="row text-center justify-content-center p-1">
             <div class="col-6 col-lg-3 mb-2 pr-1">
-                <button type="button" class="btn btn-primary btn-lg w-100">Clientes</button>
+                <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/clientes';">Clientes</button>
             </div>
             <div class="col-6 col-lg-3 mb-2 pl-0">
-                <button type="button" class="btn btn-primary btn-lg w-100">Usuários</button>
+                <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/usuarios';">Usuários</button>
             </div>
 
         </div>
@@ -31,7 +31,7 @@
                 <!-- </div>
                     </div>
                 </form> -->
-                <form method="GET" action="{{ url_for('dashboard_customers') }}">
+                <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -41,6 +41,8 @@
                 </form>
             </div>
         </div>
+
+        {% if type_data == 'clientes' %}
 
         {%for customer in customers%}
         <div class="row justify-content-center ">
@@ -64,6 +66,32 @@
             </div>
         </div>
         {% endfor %}
+        {% endif %}
+
+        {% if type_data == 'usuarios' %}
+        {%for customer in customers%}
+        <div class="row justify-content-center ">
+            <div class="col-lg-6">
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{ customer.username }}</button>
+            </div>
+        </div>
+        <div class="row justify-content-center px-1">
+            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-{{customer.id}}">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body">
+                        <p class="card-subtitle mb-2 text-muted">Email: {{customer.email }}</p>
+                        <p class="card-subtitle mb-2 text-muted">Tipo: {{customer.type_user }}</p>
+                        <div class="row justify-content-center">
+                            <a href="#" class="card-link">Detalhes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
 
         <div class="row justify-content-center ">
             <div class="col-lg-6">
@@ -88,5 +116,38 @@
     </div>
 </div>
 
+<script>
+    // Obtém os botões pelo seletor de classe
+    var btnClientes = document.querySelector('.col-6:nth-of-type(1) button');
+    var btnUsuarios = document.querySelector('.col-6:nth-of-type(2) button');
+    var formAction = document.querySelector('#formAction');
+
+    // Verifica se a URL contém a palavra-chave "clientes" e aplica a classe CSS apropriada
+    if (location.href.indexOf("clientes") > -1 || location.href.endsWith("dashboard")) {
+        btnClientes.classList.add('btn-primary');
+    } else {
+        btnClientes.classList.remove('btn-primary');
+        btnClientes.classList.add('btn-secondary');
+    }
+
+    // Verifica se a URL contém a palavra-chave "usuarios" e aplica a classe CSS apropriada
+    if (location.href.indexOf("usuarios") > -1) {
+        clientesTrue = false;
+        btnUsuarios.classList.add('btn-primary');
+    } else {
+        btnUsuarios.classList.remove('btn-primary');
+        btnUsuarios.classList.add('btn-secondary');
+    }
+
+    let a = formAction.attributes;
+    console.log(a)
+
+    if (location.href.indexOf("clientes") > -1) {
+        formAction.setAttribute("action", "{{ url_for('dashboard_customers') }}")
+    } else {
+        formAction.setAttribute("action", "{{ url_for('dashboard_users') }}")
+    }
+
+</script>
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from climaxcool import app
 from flask import render_template, url_for, redirect, request, flash
-from climaxcool.models import User, Customer
+from climaxcool.models import Users, Customers
 from climaxcool.shared import generate_code
 from climaxcool.forms import FormSignIn, FormCustomerRegistration, FormUsersRegistration
 from climaxcool import database
@@ -57,9 +57,8 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    users = User.query.all();
     customers = [];
-    return render_template('dashboard.html', customers=customers)
+    return render_template('dashboard.html', customers=customers, type_data='')
 
 
 # @app.route('/dashboard/clientes')
@@ -81,14 +80,30 @@ def dashboard_customers():
     print(name);
 
     if name:
-        customers = Customer.query.filter(Customer.name_customer.ilike(f'%{name}%')).all();
+        customers = Customers.query.filter(Customers.name_customer.ilike(f'%{name}%')).all();
+    elif name != None:
+        customers = Customers.query.order_by(Customers.name_customer).all();
     else:
-        customers = Customer.query.order_by(Customer.name_customer).all();
+        customers = [];     
 
-    return render_template('dashboard.html', customers=customers)    
+    
+
+    return render_template('dashboard.html', customers=customers, type_data='clientes')    
 
 
+@app.route('/dashboard/usuarios')
+def dashboard_users():
+    name = request.args.get('name_customer_input');
+    print(name);
 
+    if name:
+        customers = Users.query.filter(Users.username.ilike(f'%{name}%')).all();
+    elif name != None:
+        customers = Users.query.order_by(Users.username).all();
+    else:
+        customers = [];     
+
+    return render_template('dashboard.html', customers=customers, type_data='usuarios')    
 
 
 
@@ -98,7 +113,7 @@ def customers_registration():
 
     if form_customer.validate_on_submit():
         print('formulário validado')
-        new_customer = Customer(
+        new_customer = Customers(
             type_customer= form_customer.type_customer.data,
             number_register_customer= form_customer.number_register_customer.data,
             name_customer= form_customer.name_customer.data,
@@ -125,11 +140,12 @@ def users_registration():
 
     if form_users.validate_on_submit():
         print('formulário validado')
-        new_user = User(
+        new_user = Users(
             type_user=form_users.type_user.data,
             username=form_users.username.data, 
             email=form_users.email.data,
-            password=form_users.password.data
+            password=form_users.password.data,
+            #permission_user=form_users.permission_user.data
         )
         database.session.add(new_user)
         database.session.commit()

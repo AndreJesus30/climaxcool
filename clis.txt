@@ -2,11 +2,51 @@ Pesquisar Admin para visualizar bancos SQL
 - DB Browser for sqlite
 
 
-CRIAR NOVO USUÁRIO:
+CRIAR NOVO CLIENTE:
 
 INSERT INTO "main"."Customer"
 ("id", "type_customer", "number_register_customer", "name_customer", "name_responsible", "email", "address", "telephone_fixed", "telephone_mobile", "reference_point", "id_user")
 VALUES (4, 'Pessoa Física', '222.222.222-22', 'Maria das flores', 'Maria', 'maria@gmail.com', 'rua 75 jd. goias', '62 32823834', '62 985419632', 'perto da feira', 1);
+
+
+CRIAR NOVO USUÁRIO:
+
+INSERT INTO Users (type_user, username, email, password, status_user, permission_user, company_user)
+VALUES 
+('Funcionário', 'janedoe', 'janedoe@example.com', 'password456', 'ATIVO', 0, 'Climax Cool'),
+('Funcionário', 'bobsmith', 'bobsmith@example.com', 'password789', 'ATIVO', 0, 'Climax Cool'),
+('Externo', 'maryjones', 'maryjones@example.com', 'password111', 'INATIVO', 0, 'Outra empresa');
+
+
+CRIAR TABLES
+
+CREATE TABLE Users (
+    id INTEGER PRIMARY KEY,
+    type_user TEXT NOT NULL,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    status_user TEXT DEFAULT 'ATIVO',
+    permission_user INTEGER DEFAULT 0,
+	company_user TEXT DEFAULT 'Climax Cool'
+);
+
+CREATE TABLE Customers (
+    id INTEGER PRIMARY KEY,
+    type_customer TEXT NOT NULL,
+    number_register_customer TEXT NOT NULL UNIQUE,
+    name_customer TEXT NOT NULL,
+    name_responsible TEXT,
+    email TEXT,
+    address TEXT,
+    telephone_fixed TEXT,
+    telephone_mobile TEXT NOT NULL,
+    reference_point TEXT,
+	status_customer TEXT DEFAULT 'ATIVO',
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES Users (id)
+);
 
 
 ESCREVER SCRIPTS PADRÃO PARA EXECUTAR NO TERMINAL
