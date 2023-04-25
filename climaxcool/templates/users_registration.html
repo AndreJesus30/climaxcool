@@ -28,6 +28,16 @@
                             {{ form_users.email.label(class="form-label") }}
                             {{ form_users.email(class="form-control", placeholder="exemplo@gmail.com") }}
                         </div>
+                        <label for="autocomplete">Digite uma empresa: </label>
+                        <input type="text" id="autocomplete" class="form-control" autocomplete="on">
+                        <!-- <input type="text" name="search" class="form-control" autocomplete="off" list="companynames"> -->
+                        <!-- <datalist id="companynames">
+                            {% for company in customers %}
+                            <option value="{{company.name_customer}}"></option>
+                            {% endfor %} -->
+                        <!-- <option value="emp 2"></option>
+                            <option value="emp 3"></option> -->
+                        <!-- </datalist> -->
                         <div class="row form-group mt-1 mx-1">
                             {{ form_users.password.label(class="form-label") }}
                             {{ form_users.password(class="form-control") }}
@@ -49,5 +59,7 @@
         </div>
     </div>
 </div>
+
+
 
 {% endblock %}

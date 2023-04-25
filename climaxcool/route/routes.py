@@ -1,5 +1,5 @@
 from climaxcool import app
-from flask import render_template, url_for, redirect, request, flash
+from flask import render_template, url_for, redirect, request, jsonify, flash
 from climaxcool.models import Users, Customers
 from climaxcool.shared import generate_code
 from climaxcool.forms import FormSignIn, FormCustomerRegistration, FormUsersRegistration
@@ -138,6 +138,10 @@ def users_registration():
     form_users = FormUsersRegistration()
     print("fora da validação")
 
+    company_field = request.args.get('company_user') 
+    print(company_field)
+    customers = Customers.query.order_by(Customers.name_customer).all();
+
     if form_users.validate_on_submit():
         print('formulário validado')
         new_user = Users(
@@ -152,7 +156,22 @@ def users_registration():
         print('salvo no banco de dados')
         return redirect(url_for('dashboard'))
 
-    return render_template('users_registration.html', form_users=form_users)
+    return render_template('users_registration.html', form_users=form_users, customers=customers)
+
+
+@app.route('/empresas_sugeridas/<value>')
+def product_suggestions(value):
+    search_name = value
+    print(search_name)
+    # products = Customers.query.order_by(Customers.name_customer).all();
+    if len(search_name) >= 2:
+        products = Customers.query.filter(Customers.name_customer.like(f'%{search_name}%')).all()
+        suggestions = [p.name_customer for p in products]
+        suggestions = sorted(suggestions) 
+    else:
+        suggestions = []
+    print(suggestions)
+    return jsonify(suggestions)
 
 
 @app.route('/qr-code')
