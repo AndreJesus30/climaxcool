@@ -18,6 +18,36 @@ VALUES
 ('Externo', 'maryjones', 'maryjones@example.com', 'password111', 'INATIVO', 0, 'Outra empresa');
 
 
+CRIAR NOVO EQUIPAMENTO:
+
+INSERT INTO Equipments (name_equipment, brand_equipment, address, id_customer, id_user)
+VALUES 
+    ('Ar LG tipo tal padrão tal numero 2000', 'LG', 'Sala 2 no fundo', 8, 1),
+    ('Ar Samsung tipo tal padrão tal numero 2000', 'Samsung', 'Sala 1 no fundo', 10, 2),
+    ('Ar Carrier tipo tal padrão tal numero 2000', 'Carrier', 'Quarto 3 frente', 9, 3),
+    ('Ar Fujitsu tipo tal padrão tal numero 2000', 'Fujitsu', 'Sala 3 frente', 10, 1),
+    ('Ar LG tipo tal padrão tal numero 3000', 'LG', 'Sala 2 no fundo', 8, 2),
+    ('Ar Samsung tipo tal padrão tal numero 3000', 'Samsung', 'Sala 1 no fundo', 4, 3),
+    ('Ar Carrier tipo tal padrão tal numero 3000', 'Carrier', 'Quarto 3 frente', 7, 1),
+    ('Ar Fujitsu tipo tal padrão tal numero 3000', 'Fujitsu', 'Sala 3 frente', 7, 2),
+    ('Ar LG tipo tal padrão tal numero 4000', 'LG', 'Sala 2 no fundo', 7, 3),
+    ('Ar Samsung tipo tal padrão tal numero 4000', 'Samsung', 'Sala 1 no fundo', 2, 1),
+    ('Ar Carrier tipo tal padrão tal numero 4000', 'Carrier', 'Quarto 3 frente', 2, 2),
+    ('Ar Fujitsu tipo tal padrão tal numero 4000', 'Fujitsu', 'Sala 3 frente', 3, 3),
+    ('Ar LG tipo tal padrão tal numero 5000', 'LG', 'Sala 2 no fundo', 3, 1),
+    ('Ar Samsung tipo tal padrão tal numero 5000', 'Samsung', 'Sala 1 no fundo', 4, 2),
+    ('Ar Carrier tipo tal padrão tal numero 5000', 'Carrier', 'Quarto 3 frente', 6, 3),
+    ('Ar Fujitsu tipo tal padrão tal numero 5000', 'Fujitsu', 'Sala 3 frente', 8, 1),
+    ('Ar LG tipo tal padrão tal numero 6000', 'LG', 'Sala 2 no fundo', 4, 2),
+    ('Ar Samsung tipo tal padrão tal numero 6000', 'Samsung', 'Sala 1 no fundo', 4, 3),
+    ('Ar Carrier tipo tal padrão tal numero 6000', 'Carrier', 'Quarto 3 frente', 4, 1),
+    ('Ar Fujitsu tipo tal padrão tal numero 6000', 'Fujitsu', 'Sala 3 frente', 6, 2);
+
+UPDATE Equipments SET qr_code = '48765132184AD' WHERE id = 4;
+UPDATE Equipments SET qr_code = '48765132184AD' WHERE id = 5;
+
+
+
 CRIAR TABLES
 
 CREATE TABLE Users (
@@ -45,6 +75,20 @@ CREATE TABLE Customers (
 	status_customer TEXT DEFAULT 'ATIVO',
     date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES Users (id)
+);
+
+CREATE TABLE Equipments (
+    id INTEGER PRIMARY KEY,
+    name_equipment TEXT NOT NULL,
+    brand_equipment TEXT NOT NULL,
+    address TEXT NOT NULL,
+    qr_code TEXT UNIQUE,
+    status_equipment TEXT DEFAULT 'ATIVO',
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    id_customer INTEGER NOT NULL, 
+	id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_customer) REFERENCES Customers (id),
     FOREIGN KEY (id_user) REFERENCES Users (id)
 );
 

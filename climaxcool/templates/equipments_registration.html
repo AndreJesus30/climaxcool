@@ -1,0 +1,45 @@
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div class="d-flex justify-content-center align-items-center bg-dark" style="padding-top: 30px; height: 100vh;">
+    <div class="bg-dark text-white">
+        <div class="col">
+            <div>
+                <form method="POST" action="" class="border p-4 mt-2 mb-2">
+                    {{ form_equipments.csrf_token }}
+                    <legend class="text-center">Cadastro de Ar Condicionado</legend>
+                    <fieldset>
+                        <div class="form-group mt-1 mx-1">
+                            {{ form_equipments.name_equipment.label(id='label-name-responsible', class="form-label") }}
+                            {{ form_equipments.name_equipment(class="form-control", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipments.brand_equipment.label(class="form-label") }}
+                            {{ form_equipments.brand_equipment(class="form-control", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipments.address.label(class="form-label") }}
+                            {{ form_equipments.address(class="form-control w-100", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipments.qr_code.label(class="form-label") }}
+                            {{ form_equipments.qr_code(class="form-control w-100", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipments.customer.label(class="form-label") }}
+                            {{ form_equipments.customer(class="form-control w-100", rows="1") }}
+                        </div>
+                    </fieldset>
+                    <div class="w-auto">
+                        {{ form_equipments.btn_submit_equip_registration(class="w-100 btn btn-primary mt-4 mb-2") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

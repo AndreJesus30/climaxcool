@@ -41,3 +41,13 @@ class FormUsersRegistration(FlaskForm):
     #fazer vinculo do texto com o numero da permissão 0, 1, 2..
     #company = StringField('Empresa', validators=[DataRequired()])
     btn_submit_user_registration = SubmitField('Cadastrar Usuário')
+
+
+class FormEquipmentsRegistration(FlaskForm):
+    name_equipment = TextAreaField('Nome', validators=[DataRequired()])
+    brand_equipment = StringField('Marca', validators=[DataRequired()])
+    address = TextAreaField('Local', validators=[DataRequired()])
+    qr_code = StringField('QR-Code')
+    status_equipment = StringField('Status',default="Ativo")
+    customer = SelectField('Cliente', validators=[DataRequired()], choices=[' ','Empresa 1', 'Empresa 2', "Empresa 3", "João"]) 
+    btn_submit_equip_registration = SubmitField('Cadastrar Equipamento')

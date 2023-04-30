@@ -16,10 +16,8 @@
 <body>
     <div class="container bg-dark " style="min-height: 1000px;">
         <div class="py-2 text-center">
-            <img class="d-block mx-auto mt-2 mb-2 rounded-circle" src="../static/images/logo_climax_cool.jpg" alt="" width="84" height="84">
-            <h2 class="pb-2">Relatório de Serviço</h2>
-            <div class="pb-2">
-                <a id="dashboard" class="btn btn-outline-info mr-2" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <div class="mt-4 pb-2">
+                <a id="dashboard" class="btn btn-outline-info mr-2" href="{{ url_for('dashboard_customers') }}">Dashboard</a>
                 <a id="gerar-qr" class="btn btn-outline-info mr-2" href="{{ url_for('generate_qrcode', qtde=42) }}">Gerar QR Codes - Folha A4</a>
                 <Button id="gerar-pdf" type="button" class="btn btn-outline-info" onclick="">Gerar PDF</Button>
             </div>

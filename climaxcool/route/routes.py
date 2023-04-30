@@ -1,8 +1,8 @@
 from climaxcool import app
 from flask import render_template, url_for, redirect, request, jsonify, flash
-from climaxcool.models import Users, Customers
+from climaxcool.models import Users, Customers, Equipments
 from climaxcool.shared import generate_code
-from climaxcool.forms import FormSignIn, FormCustomerRegistration, FormUsersRegistration
+from climaxcool.forms import FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
 from climaxcool import database
 
 generate_qrcodes = 'Função Gerar QR Codes'
@@ -86,8 +86,6 @@ def dashboard_customers():
     else:
         customers = [];     
 
-    
-
     return render_template('dashboard.html', customers=customers, type_data='clientes')    
 
 
@@ -129,7 +127,7 @@ def customers_registration():
         database.session.commit()
         print('salvo no banco de dados')
         #flash('Cliente cadastrado com sucesso', 'alert-success'),
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard_customers'))
     return render_template('customer_registration.html', form_customer=form_customer)
 
 
@@ -154,7 +152,7 @@ def users_registration():
         database.session.add(new_user)
         database.session.commit()
         print('salvo no banco de dados')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard_users'))
 
     return render_template('users_registration.html', form_users=form_users, customers=customers)
 
@@ -172,6 +170,33 @@ def product_suggestions(value):
         suggestions = []
     print(suggestions)
     return jsonify(suggestions)
+
+@app.route('/cadastro-ar-condicionado', methods=["GET", "POST"])
+def equipments_registration():
+
+    form_equipments = FormEquipmentsRegistration()
+    customers = Customers.query.order_by(Customers.name_customer).all();
+    form_equipments.customer.choices = [" "]
+    form_equipments.customer.choices += [customer.name_customer for customer in customers]
+
+    if form_equipments.validate_on_submit():
+        name_customer = form_equipments.customer.data
+        id_customer = Customers.query.filter_by(name_customer=name_customer).first().id;
+        
+        new_equipments = Equipments(
+            name_equipment=form_equipments.name_equipment.data,
+            brand_equipment=form_equipments.brand_equipment.data, 
+            address=form_equipments.address.data,
+            qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
+            id_customer= id_customer,
+            id_user=1,
+        )
+        database.session.add(new_equipments)
+        database.session.commit()
+        return redirect(url_for('dashboard'))
+
+       
+    return render_template('equipments_registration.html', form_equipments=form_equipments)     
 
 
 @app.route('/qr-code')
