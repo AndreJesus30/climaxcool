@@ -1,133 +1,109 @@
 {% extends 'index.html' %}
 
-{% block title %} Inicio {% endblock %}
+{% block title %} Novo Serviço {% endblock %}
 
 {% block body %}
 
-<div class="container bg-dark">
-    <div class=" py-2 text-center">
-        <div class="pb-2">
-            <a id="btn-historico" class="btn btn-outline-secondary mr-2" href="{{url_for('report_service')}}">Histórico</a>
-            <a id="btn-novo-servico" class="btn btn-outline-info mr-2" href="{{url_for('new_service')}}">Novo Serviço</a>
+<div class="container-fluid row justify-content-center bg-dark vh-100">
+    <div class="container row justify-content-center pt-4 pb-2 mx-0 px-0 px-md-4 text-center vh-100">
+        <div class="col-6 col-md-3">
+            <a id="btn-historico" class="btn btn-outline-secondary w-100" href="{{url_for('report_service')}}">Histórico</a>
+        </div>
+        <div class="col-6 col-md-3">
+            <a id="btn-novo-servico" class="btn btn-outline-info w-100" href="{{url_for('new_service')}}">Novo Serviço</a>
         </div>
     </div>
     <div class="container text-center text-light">
-        <div class=" text-left text-light">
-            <div class="row justify-content-center">
-                <div class="col-8 col-md-4">
-                    <span>Nome Cliente:</span>
-                    <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
-                    </div>
-                </div>
-                <div class="col-4 col-md-2">
-                    <span>RG:</span>
-                    <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">5552036</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center text-left text-light">
-            <div class="col col-md-6">
-                <span>Equipamento:</span>
-                <div class="bg-light rounded mt-1">
-                    <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V</p>
-                </div>
-            </div>
-        </div>
+        <form method="POST" action="" class="border p-4 mt-2 mb-2">
+            {{ form_new_service.csrf_token }}
+            <legend class="text-center">Cadastro de Serviço</legend>
 
-        <!-- <div class="mb-2 text-left">
-            <span>Serviços:</span>
-            <div class="mt-1">
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca do Filtro</span>
-                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Limpeza e higienização</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Troca de Peças</span>
-                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Calibragem</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Outros</span>
-                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Troca</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Etc...</span>
-                <span class="badge badge-pill badge-info py-2 px-3 mb-2">Etc...</span>
-                <span class="badge badge-pill badge-secondary py-2 px-3 mb-2">Etc...</span>
+            <div class=" text-left text-light">
+                <div class="row justify-content-center">
+                    <div class="col col-md-6">
+                        <span>Nome Cliente:</span>
+                        <div class="bg-light rounded mt-1">
+                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div> -->
-        <div class="row justify-content-center mb-3 text-left">
-            <div class=" col-md-6">
-                <ul class="list-group">
-                    <span>Serviços:</span>
-                    <li class="list-group-item small mt-1" id="servicos">
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Instalação</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Desmontagem</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Preventiva</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Corretiva</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Manutenção Química</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Limpeza de Filtro</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Desobstrução de Dreno</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Carga de Gás</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Reparo na Placa Eletrônica</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. de Capacitor</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Modo Ventilador Interno</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Modo Ventilador Externo</span>
-                        <span class="badge badge-pill badge-secondary servico py-2 px-2 mb-2">Tr. do Compressor</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- <div class="mt-3 small">
-            <p>Serviços selecionados: <span id="selecionados"></span></p>
-        </div> -->
-        <div class="row justify-content-center">
-            <div class="text-left text-light col-md-6">
-                <span>Observações:</span>
-                <div style="height: 100px;" class="bg-light mb-3 mt-1 rounded"></div>
-            </div>
-        </div>
 
-        <div class="text-left text-light">
-            <div class="row justify-content-center">
-                <div class="col-8 col-md-4">
-                    <span>Técnico:</span>
+            <div class="row justify-content-center text-left text-light">
+                <div class="col col-md-6">
+                    <span>Equipamento:</span>
                     <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
-                    </div>
-                </div>
-                <div class="col-4 col-md-2">
-                    <span>Preço:</span>
-                    <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">R$ 250,00</p>
+                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V</p>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center pb-3 mb-3">
-            <div class="col-md-6 mt-5">
-                <button style="color:black; background-color: rgb(0, 120, 141) ; font-size: 1.1rem; width: 100%;" type="button" class="btn badge-pill py-1 px-3 mr-1">SALVAR</button>
+
+            <fieldset>
+                <div class="row justify-content-center text-left">
+                    <div class=" col-md-6">
+                        <ul class="list-group">
+                            <span>Serviços:</span>
+                            <li class="list-group-item small mt-1 bg-dark" id="servicos">
+                                {%for service in form_new_service%}
+                                {%if 'service_' in service.name%}
+                                <div class="form-group m-0 px-1">
+                                    {{ service(class="form-check-input") }}
+                                    {{ service.label(class="form-check-label text-secondary") }}
+                                </div>
+                                {%endif%}
+                                {%endfor%}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="text-left text-light col-md-6">
+                        {{form_new_service.anotations.label(class="form-label")}}
+                        {{form_new_service.anotations(class="form-control")}}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-8 col-md-4 text-left text-light">
+                        {{form_new_service.expert.label(class="form-label")}}
+                        {{form_new_service.expert(class="form-control")}}
+                    </div>
+                    <div class="col-4 col-md-2 text-left text-light">
+                        {{form_new_service.price.label(class="form-label")}}
+                        {{form_new_service.price(class="form-control")}}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="row justify-content-center mt-4">
+                <div class="col col-md-6  ">
+                    {{form_new_service.btn_submit_new_service(class="btn btn-primary w-100")}}
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 
 
 <script>
-    const servicos = document.querySelectorAll('.servico');
-    const selecionados = new Set();
-    const selecionadosElement = document.querySelector('#selecionados');
+    //Coloquei quando estava usando as badges
+    // const servicos = document.querySelectorAll('.servico');
+    // const selecionados = new Set();
+    // const selecionadosElement = document.querySelector('#selecionados');
 
-    function atualizarSelecionados() {
-        selecionadosElement.innerHTML = [...selecionados].join(', ');
-    }
+    // function atualizarSelecionados() {
+    //     selecionadosElement.innerHTML = [...selecionados].join(', ');
+    // }
 
-    servicos.forEach(servico => {
-        servico.addEventListener('click', () => {
-            servico.classList.toggle('badge-info');
-            if (selecionados.has(servico.textContent)) {
-                selecionados.delete(servico.textContent);
-            } else {
-                selecionados.add(servico.textContent);
-            }
-            atualizarSelecionados();
-        });
-    });
+    // servicos.forEach(servico => {
+    //     servico.addEventListener('click', () => {
+    //         servico.classList.toggle('badge-info');
+    //         if (selecionados.has(servico.textContent)) {
+    //             selecionados.delete(servico.textContent);
+    //         } else {
+    //             selecionados.add(servico.textContent);
+    //         }
+    //         atualizarSelecionados();
+    //     });
+    // });
 
     var historicoBtn = document.getElementById('btn-historico');
     var novoServicoBtn = document.getElementById('btn-novo-servico');

@@ -13,24 +13,7 @@
 
         </div>
         <div class="row text-center justify-content-center p-1">
-            <!-- <div class="col-12 col-lg-6 mb-2 mr-1 ">
-                <div class="">
-                    <select class="custom-select">
-                        <option selected>Pesquisar cliente</option>
-                        <option value="Todos">Todos</option>
-                    </select>
-                </div>
-            </div> -->
             <div class="col-12 col-lg-6 mb-4 mr-1">
-                <!-- <form action="">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary" type="button" id="button-addon2" onclick="window.location.href = '/dashboard/cliente/emp';">Pesquisar</button> -->
-                <!-- onclick="window.location.href = '/dashboard/clientes';">Pesquisar</button> -->
-                <!-- </div>
-                    </div>
-                </form> -->
                 <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
@@ -43,7 +26,6 @@
         </div>
 
         {% if type_data == 'clientes' %}
-
         {%for customer in customers%}
         <div class="row justify-content-center ">
             <div class="col-lg-6">
@@ -58,7 +40,7 @@
                         <p class="card-subtitle mb-2 text-muted">Telefone: {{customer.telephone_mobile}}</p>
                         <p class="card-subtitle mb-4 text-muted">Email: {{customer.email}}</p>
                         <div class="row justify-content-center">
-                            <a href="#" class="card-link">Serviços</a>
+                            <a href="{{ url_for('equipment_summary', customer_id=customer.id) }}" class="card-link">Serviços</a>
                             <a href="#" class="card-link">Detalhes</a>
                         </div>
                     </div>
@@ -72,7 +54,7 @@
         {%for customer in customers%}
         <div class="row justify-content-center ">
             <div class="col-lg-6">
-                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{ customer.username }}</button>
+                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{customer.username}}</button>
             </div>
         </div>
         <div class="row justify-content-center px-1">
@@ -90,29 +72,6 @@
         </div>
         {% endfor %}
         {% endif %}
-
-
-
-        <div class="row justify-content-center ">
-            <div class="col-lg-6">
-                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-100">Papelaria Tributária</button>
-            </div>
-        </div>
-        <div class="row justify-content-center px-1">
-            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-100">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <p class="card-title">CNPJ: 112.456.897/0001-54</p>
-                        <p class="card-subtitle mb-2 text-muted">Telefone: 62 99999-8798</p>
-                        <p class="card-subtitle mb-4 text-muted">Email: tributaria@gmail.com</p>
-                        <div class="row justify-content-center">
-                            <a href="{{ url_for('equipment_summary', customer_id=1) }}" class="card-link">Serviços</a>
-                            <a href="#" class="card-link">Detalhes</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

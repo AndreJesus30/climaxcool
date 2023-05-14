@@ -2,7 +2,7 @@ from climaxcool import app
 from flask import render_template, url_for, redirect, request, jsonify, flash
 from climaxcool.models import Users, Customers, Equipments
 from climaxcool.shared import generate_code
-from climaxcool.forms import FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
+from climaxcool.forms import FormNewService, FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
 from climaxcool import database
 
 generate_qrcodes = 'Função Gerar QR Codes'
@@ -104,7 +104,6 @@ def dashboard_users():
     return render_template('dashboard.html', customers=customers, type_data='usuarios')    
 
 
-
 @app.route('/cadastro-clientes', methods=['GET', 'POST'])
 def customers_registration():
     form_customer = FormCustomerRegistration()
@@ -171,29 +170,52 @@ def product_suggestions(value):
     print(suggestions)
     return jsonify(suggestions)
 
-@app.route('/cadastro-ar-condicionado', methods=["GET", "POST"])
-def equipments_registration():
+@app.route('/cadastro-ar-condicionado/', methods=["GET", "POST"], defaults={'customer_id': None})
+@app.route('/cadastro-ar-condicionado/<customer_id>', methods=["GET", "POST"])
+def equipments_registration(customer_id):
 
-    form_equipments = FormEquipmentsRegistration()
-    customers = Customers.query.order_by(Customers.name_customer).all();
-    form_equipments.customer.choices = [" "]
-    form_equipments.customer.choices += [customer.name_customer for customer in customers]
+    if customer_id is None:
 
-    if form_equipments.validate_on_submit():
-        name_customer = form_equipments.customer.data
-        id_customer = Customers.query.filter_by(name_customer=name_customer).first().id;
-        
-        new_equipments = Equipments(
-            name_equipment=form_equipments.name_equipment.data,
-            brand_equipment=form_equipments.brand_equipment.data, 
-            address=form_equipments.address.data,
-            qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
-            id_customer= id_customer,
-            id_user=1,
-        )
-        database.session.add(new_equipments)
-        database.session.commit()
-        return redirect(url_for('dashboard'))
+        form_equipments = FormEquipmentsRegistration()
+        customers = Customers.query.order_by(Customers.name_customer).all();
+        form_equipments.customer.choices = [" "]
+        form_equipments.customer.choices += [customer.name_customer for customer in customers]
+
+        if form_equipments.validate_on_submit():
+            name_customer = form_equipments.customer.data
+            id_customer = Customers.query.filter_by(name_customer=name_customer).first().id;
+            
+            new_equipments = Equipments(
+                name_equipment=form_equipments.name_equipment.data,
+                brand_equipment=form_equipments.brand_equipment.data, 
+                address=form_equipments.address.data,
+                qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
+                id_customer= id_customer,
+                id_user=1,
+            )
+            database.session.add(new_equipments)
+            database.session.commit()
+            return redirect(url_for('dashboard'))
+
+    if customer_id:
+        form_equipments = FormEquipmentsRegistration()
+        customer = Customers.query.filter_by(id=customer_id).first();
+        form_equipments.customer.choices = [customer.name_customer];
+        form_equipments.customer.data = customer.name_customer;
+
+        if form_equipments.validate_on_submit():
+            
+            new_equipments = Equipments(
+                name_equipment=form_equipments.name_equipment.data,
+                brand_equipment=form_equipments.brand_equipment.data, 
+                address=form_equipments.address.data,
+                qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
+                id_customer= customer_id,
+                id_user=1,
+            )
+            database.session.add(new_equipments)
+            database.session.commit()
+            return redirect(url_for('equipment_summary', customer_id=customer_id))
 
        
     return render_template('equipments_registration.html', form_equipments=form_equipments)     
@@ -218,15 +240,24 @@ def generate_qrcode(qtde):
 
 @app.route('/dashboard/cliente/servicos/<customer_id>')
 def equipment_summary(customer_id):
-    customer_name = "";
-    if customer_id == "1":
-        customer_name = "Papelaria Tributária";
-    return render_template('summary_equipments.html',  customer_name=customer_name)
+    customer = Customers.query.filter_by(id=customer_id).first();
+    equipments = Equipments.query.filter_by(id_customer=customer_id).all();
+
+    print(equipments);
+
+    return render_template('summary_equipments.html', customer=customer, equipments=equipments)
 
 
-@app.route('/dashboard/cliente/novo-servico')
+@app.route('/dashboard/cliente/novo-servico', methods=["POST", "GET"])
 def new_service():
-    return render_template('new_service.html')
+    form_new_service = FormNewService()
+
+    if form_new_service.validate_on_submit:
+        for service in form_new_service:
+            if "service_" in service.name and service.data:
+                print(f"{service.data}  {service.name}  {service.label.text}")
+
+    return render_template('new_service.html', form_new_service=form_new_service)
 
 
 @app.route('/dashboard/cliente/relatorio-servico')

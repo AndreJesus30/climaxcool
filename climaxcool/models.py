@@ -43,3 +43,20 @@ class Equipments(database.Model):
     date_create = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
     id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False)
     id_user = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
+
+
+class Services(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
+    date_create = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+    annotations = database.Column(database.String) 
+    price = database.Column(database.Integer)
+    id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False) 
+    id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)  
+    id_expert = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
+
+
+class ListForServices(database.Model):
+    service = database.Column(database.String, nullable=False)
+    id_service = database.Column(database.Integer, database.ForeignKey('services.id'), primary_key=True)
+    id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False) 
+    id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)

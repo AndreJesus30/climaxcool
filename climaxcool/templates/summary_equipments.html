@@ -4,47 +4,44 @@
 {% extends 'nav_logged.html' %}
 {% block bodynav %}
 
-<head>
-    <link rel="stylesheet" href="../static/main.css">
-</head>
-
-<!-- <div style="padding-top: 55px;">
-    <div style="height: 3px; width: 100%; background-color: rgb(20, 20, 20);"></div>
-</div> -->
-<div class="container-fluid bg-dark">
-    <div style="padding-top: 70px; height: 100vh;" class="row justify-content-center bg-dark">
-        <div class="py-2 mb-3 text-center col-md-6 col-xl-4">
-            <h1 class="my-4 d-none d-md-block" id="customer-name">{{customer_name}}</h1>
-            <!-- O QR Code será o link do href que levará para a página do equipamento -->
-            <ul class="list-group ">
-                <li class="list-group-item">
-                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{{url_for('report_service')}}">
-                        <span>Ar LG 255 Modelo 23 - Local: Sala 5</span>
-                        <span><i class="fas fa-bars"></i></span>
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="#">
-                        <span>Ar LG 255 Modelo 23 - Local: Sala 5</span>
-                        <span><i class="fas fa-bars"></i></span>
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="#">
-                        <span>Ar LG 255 Modelo 23 - Local: Sala 5</span>
-                        <span><i class="fas fa-bars"></i></span>
-                    </a>
-                </li>
-                <li class="list-group-item">
-                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="#">
-                        <span>Ar LG 255 Modelo 23 - Local: Sala 5</span>
-                        <span><i class="fas fa-bars"></i></span>
-                    </a>
-                </li>
-            </ul>
+<div style="padding-top: 70px; height: 140vh;" class="container-fluid bg-dark">
+    <div class="container">
+        <div class="row text-center justify-content-center">
+            <div class="col-12 col-lg-6 mb-2 mr-1">
+                <button type="button" class="btn btn-primary w-100 px-1" onclick="window.location.href = '/cadastro-ar-condicionado/{{customer.id}}';">Cadastrar Novo</button>
+            </div>
+            <div class="col-12 col-lg-6 mb-4 mr-1">
+                <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um termo relacionado a busca" aria-label="Digite um nome" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" id="button-addon2" type="submit">Pesquisar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center mx-md-1">
+                <h2 class="col-12 text-center d-none d-md-block" id="customer-name">{{customer.name_customer}}</h2>
+                {%for equipment in equipments%}
+                <div style="background-color: white;" class="rounded py-2 my-1 text-center col-12 col-lg-6 mb-2 mr-1">
+                    <p class="my-0">{{equipment.name_equipment}} - {{equipment.address}}</p>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="">Editar</a>
+                    <span> - </span>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('report_service')}}">Histórico</a>
+                    <span> - </span>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="">Novo Serviço</a>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 <script>
     var titlePrincipal = document.getElementById("nav-title")
