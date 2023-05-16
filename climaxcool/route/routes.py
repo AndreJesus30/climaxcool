@@ -1,6 +1,6 @@
 from climaxcool import app
 from flask import render_template, url_for, redirect, request, jsonify, flash
-from climaxcool.models import Users, Customers, Equipments
+from climaxcool.models import Users, Customers, Equipments, Services, ListForServices
 from climaxcool.shared import generate_code
 from climaxcool.forms import FormNewService, FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
 from climaxcool import database
@@ -170,6 +170,7 @@ def product_suggestions(value):
     print(suggestions)
     return jsonify(suggestions)
 
+
 @app.route('/cadastro-ar-condicionado/', methods=["GET", "POST"], defaults={'customer_id': None})
 @app.route('/cadastro-ar-condicionado/<customer_id>', methods=["GET", "POST"])
 def equipments_registration(customer_id):
@@ -248,22 +249,92 @@ def equipment_summary(customer_id):
     return render_template('summary_equipments.html', customer=customer, equipments=equipments)
 
 
-@app.route('/dashboard/cliente/novo-servico', methods=["POST", "GET"])
-def new_service():
+@app.route('/dashboard/clientes/servicos/<customer_id>/filtro')
+def equipment_summary_filter(customer_id):
+    customer = Customers.query.filter_by(id=customer_id).first();
+    name_equipment = request.args.get('name_equipment_input');
+    equipments_filter = [];
+    
+    if name_equipment:
+        equipments = Equipments.query.filter_by(id_customer=customer_id).all();
+        for i in equipments:
+            if name_equipment.upper() in (i.name_equipment +" "+ i.address).upper():
+                equipments_filter.append(i)
+    elif name_equipment != None:
+        equipments_filter = Equipments.query.filter_by(id_customer=customer_id).all();
+    else:
+        equipments_filter = [];     
+
+    return render_template('summary_equipments.html', customer=customer, equipments=equipments_filter)   
+
+
+
+@app.route('/dashboard/cliente/novo-servico/<int:customer_id>/<int:equipment_id>', methods=["POST", "GET"])
+def new_service(customer_id, equipment_id):
     form_new_service = FormNewService()
 
+    customer = Customers.query.filter_by(id=customer_id).first()
+    equipment = Equipments.query.filter_by(id=equipment_id).first()
+
+    #if permissão total pode escolher qualquer técnico
+    #senão só tem a opção de escolher ele mesmo como técnico
+    #criar essas condições após terminar authenticação e estrutura de permissões
+
     if form_new_service.validate_on_submit:
-        for service in form_new_service:
-            if "service_" in service.name and service.data:
-                print(f"{service.data}  {service.name}  {service.label.text}")
+        new_service = Services(
+            annotations = form_new_service.annotations.data,
+            price = form_new_service.price.data,
+            id_customer = customer_id,
+            id_equipment = equipment_id,
+            id_expert = 1
+        )
+        database.session.add(new_service)
+        database.session.commit()
 
-    return render_template('new_service.html', form_new_service=form_new_service)
+        new_service_id = new_service.id
+        print(new_service_id)
+
+        if new_service_id is not None:
+            for service in form_new_service:
+                if "service_" in service.name and service.data:
+                    print(f"{service.data}  {service.name}  {service.label.text}")
+                    new_list_for_services = ListForServices(
+                        service = service.label.text,
+                        id_service = new_service_id,
+                        id_customer = customer_id,
+                        id_equipment = equipment_id,   
+                    )
+                    database.session.add(new_list_for_services)
+                    database.session.commit()
+
+    return render_template('new_service.html', form_new_service=form_new_service, customer=customer, equipment=equipment)
 
 
-@app.route('/dashboard/cliente/relatorio-servico')
-def report_service():
-    return render_template('report_service.html')  
 
+#acesso pelo id do equipamento seguido o fluxo do sistema
+@app.route('/dashboard/cliente/relatorio-servico', defaults={'equipment_id': None})
+@app.route('/dashboard/cliente/relatorio-servico/<int:equipment_id>')
+def report_service(equipment_id):
+    equipment = None
+
+    if equipment_id is not None:
+        equipment = Equipments.query.filter_by(id=equipment_id).first()
+        customer = Customers.query.filter_by(id=equipment.id_customer).first();
+
+    return render_template('report_service.html', equipment=equipment, customer=customer)  
+
+
+#acesso pelo link (qrcode)
+@app.route('/dashboard/cliente/relatorio-servico/codigo', defaults={'qr_code': None})
+@app.route('/dashboard/cliente/relatorio-servico/codigo/<int:qr_code>')
+def report_service_qr_code(qr_code):
+    equipment = None
+
+    if qr_code is not None:
+        equipment = Equipments.query.filter_by(qr_code=qr_code).first()
+        customer = Customers.query.filter_by(id=equipment.id_customer).first();
+
+    return render_template('report_service.html', equipment=equipment, customer=customer)  
 
 
 #mudar nome do método e do template 

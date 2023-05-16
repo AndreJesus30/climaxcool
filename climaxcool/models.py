@@ -54,9 +54,11 @@ class Services(database.Model):
     id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)  
     id_expert = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
 
-
+#Criar essa tabela novamente no banco, excluir e criar ela de novo, o problema
+#Pode ser no service que estava como primary_key, porém ele se repete na gravação
 class ListForServices(database.Model):
+    id = database.Column(database.Integer, primary_key=True)
     service = database.Column(database.String, nullable=False)
-    id_service = database.Column(database.Integer, database.ForeignKey('services.id'), primary_key=True)
+    id_service = database.Column(database.Integer, database.ForeignKey('services.id'), nullable=False)
     id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False) 
     id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)

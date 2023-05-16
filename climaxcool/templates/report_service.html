@@ -8,16 +8,16 @@
     <div class="py-2 text-center">
         <!-- <h2 class="pb-2">Relatório de Serviço</h2> -->
         <div class="pb-2">
-            <a id="btn-historico" class="btn btn-outline-secondary mr-2" href="{{url_for('report_service')}}">Histórico</a>
-            <a id="btn-novo-servico" class="btn btn-outline-info mr-2" href="{{url_for('new_service')}}">Novo Serviço</a>
+            <a id="btn-historico" class="btn btn-outline-secondary mr-2" href="{{url_for('report_service', equipment_id=equipment.id, customer_id=customer.id)}}">Histórico</a>
+            <a id="btn-novo-servico" class="btn btn-outline-info mr-2" href="{{url_for('new_service', equipment_id=equipment.id, customer_id=customer.id)}}">Novo Serviço</a>
         </div>
     </div>
     <div class="container text-center text-light" id="option1">
         <div class="mt-1">
-            <p style="font-size: small;" class="my-0">código: 1591245348615161</p>
-            <p style="font-size: small;" class="my-0">cliente: João da Silva Gomes</p>
+            <p style="font-size: small;" class="my-0">código: {{ equipment.qr_code }}</p>
+            <p style="font-size: small;" class="my-0">cliente: {{customer.name_customer}}</p>
             <p style="font-size: 0.7rem; color: darkgrey;" class="mt-2">
-                Ar Condicionado Split Philco, 9000 BTUS, Inverter, Controle de Ventilação, Branco - PAC9000ITFM9W - 220V
+                {{equipment.name_equipment}}
             </p>
         </div>
     </div>

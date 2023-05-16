@@ -11,9 +11,9 @@
                 <button type="button" class="btn btn-primary w-100 px-1" onclick="window.location.href = '/cadastro-ar-condicionado/{{customer.id}}';">Cadastrar Novo</button>
             </div>
             <div class="col-12 col-lg-6 mb-4 mr-1">
-                <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
+                <form id="formAction" method="GET" action="{{ url_for('equipment_summary_filter', customer_id=customer.id ) }}">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um termo relacionado a busca" aria-label="Digite um nome" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control" name="name_equipment_input" placeholder="Digite um termo relacionado a busca" aria-label="Digite um nome" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-outline-primary" id="button-addon2" type="submit">Pesquisar</button>
                         </div>
@@ -29,9 +29,9 @@
                     <p class="my-0">{{equipment.name_equipment}} - {{equipment.address}}</p>
                     <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="">Editar</a>
                     <span> - </span>
-                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('report_service')}}">Histórico</a>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('report_service', equipment_id=equipment.id)}}">Histórico</a>
                     <span> - </span>
-                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="">Novo Serviço</a>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('new_service', customer_id=customer.id, equipment_id=equipment.id)}}">Novo Serviço</a>
                 </div>
                 {% endfor %}
             </div>
