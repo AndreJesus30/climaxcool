@@ -24,8 +24,9 @@
                             {{ form_equipments.address(class="form-control w-100", rows="1") }}
                         </div>
                         <div class="row form-group mt-1 mx-1">
-                            {{ form_equipments.qr_code.label(class="form-label") }}
-                            {{ form_equipments.qr_code(class="form-control w-100", rows="1") }}
+                            {{ form_equipments.qr_code.label(class="form-label col-12 text-left px-0") }}
+                            {{ form_equipments.qr_code(class="form-control w-100 col-10", style="border-top-right-radius: 0; border-bottom-right-radius: 0", rows="1") }}
+                            <button class="btn col-2 btn-outline-primary" style="border-top-left-radius: 0; border-bottom-left-radius: 0">QR</button>
                         </div>
                         <div class="row form-group mt-1 mx-1">
                             {{ form_equipments.customer.label(class="form-label") }}

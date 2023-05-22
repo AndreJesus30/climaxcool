@@ -1,19 +1,24 @@
-from climaxcool import database
+from climaxcool import database, login_manager
 from datetime import datetime
+from flask_login import UserMixin
 
 
-class Users(database.Model):
+@login_manager.user_loader
+def load_user(id_user):
+    return Users.query.get(int(id_user))
+
+
+class Users(database.Model, UserMixin):
     id = database.Column(database.Integer, primary_key=True)
     type_user = database.Column(database.String, nullable=False) 
-    username = database.Column(database.String, nullable=False)
+    username = database.Column(database.String, nullable=False, unique=True)
     email = database.Column(database.String, nullable=False, unique=True)
     password = database.Column(database.String, nullable=False)
     status_user = database.Column(database.String, default="ATIVO")
     permission_user = database.Column(database.Integer, default=0)
-    company_user = database.Column(database.String, default="Climax Cool")
-    customer = database.relationship('Customers', backref='created_by_user', lazy=True)
+    # customer = database.relationship('Customers', backref='created_by_user', lazy=True)
     equipment = database.relationship('Equipments', backref='created_by_user', lazy=True)
-    # criar regras de permissionamento, somente leitura, edição, gravação, exclusão, total 
+    id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False)
 
 
 class Customers(database.Model):

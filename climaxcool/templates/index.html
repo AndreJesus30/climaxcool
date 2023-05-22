@@ -19,17 +19,24 @@
 </head>
 
 <body class="main-content bg-white" style="background-color: cornflowerblue; margin: 0px; padding-top: 0px">
-    <!-- <div class="container mt-4">
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        {% for categorie, message in messages %}
-        <div style="margin-top: 120px;" class="alert {{categorie}}">
-            {{message}}
+    <div class="row justify-content-center bg-dark ">
+        <div class="col-md-3 text-cente mx-2 ">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            {% for categorie, message in messages %}
+            <div class="alert {{categorie}} alert-dismissible msg flash-message fade-out" role="alert" style="margin-top: 80px; font-size: 1rem; height: 4rem;">
+                <span>
+                    {{message}}
+                </span>
+                <button type="button" class="close text-center" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
         </div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div> -->
+    </div>
 
     {% block body %}
     {% endblock %}
@@ -45,6 +52,22 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
+    <script>
+        // Seletor da mensagem
+        const flashMessage = document.querySelector('.msg.fade-out');
+        console.log(flashMessage)
+
+        // Verifica se a mensagem está presente na página
+        if (flashMessage) {
+            // Aguarda 2 segundos e adiciona a classe fade-out
+            setTimeout(() => {
+                flashMessage.classList.add('fade-out');
+                flashMessage.classList.add('d-none');
+            }, 2000);
+        }
+
+
+    </script>
 
 
     <script>
@@ -126,7 +149,9 @@
         )
     </script>
 
+
     <script>
+        //Script para sugestão de empresas dentro do userRegistration
         var value_input = document.querySelector("#autocomplete")
         $(function () {
             $("#autocomplete").autocomplete({

@@ -22,6 +22,7 @@
             </div>
         </div>
         <div class="container">
+            {% if equipments is not none and equipments|length > 0 %}
             <div class="row justify-content-center mx-md-1">
                 <h2 class="col-12 text-center d-none d-md-block" id="customer-name">{{customer.name_customer}}</h2>
                 {%for equipment in equipments%}
@@ -35,6 +36,14 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="row justify-content-center mx-md-1">
+                <div class="col-12 col-lg-6 mb-4 mr-1 text-secondary">
+                    <h1 class="text-secondary text-left">Cliente não possui equipamentos cadastrados!</h1>
+                    <p>Cadastre um equipamento clicando no botão <span class="text-primary">"Cadastrar Novo"</span> acima.</p>
+                </div>
+            </div>
+            {%endif%}
         </div>
     </div>
 </div>

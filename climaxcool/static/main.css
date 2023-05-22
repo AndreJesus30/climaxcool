@@ -11,3 +11,25 @@
 .cor {
   background-color: aqua;
 }
+
+.flash-message {
+  position: relative;
+  margin: 10px;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.flash-message.fade-out {
+  animation: fadeOut 2s forwards;
+}

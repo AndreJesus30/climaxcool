@@ -11,7 +11,6 @@
                     {{ form_users.csrf_token }}
                     <legend class="text-center">Cadastro de Usuários</legend>
                     <fieldset>
-                        <!-- {{ form_users.type_user.label(class="row mx-1") }} -->
                         <div style="font-size: 16px;" class="text-center">
                             {% for subfield in form_users.type_user %}
                             <tr>
@@ -28,16 +27,27 @@
                             {{ form_users.email.label(class="form-label") }}
                             {{ form_users.email(class="form-control", placeholder="exemplo@gmail.com") }}
                         </div>
-                        <label for="autocomplete">Digite uma empresa: </label>
-                        <input type="text" id="autocomplete" class="form-control" autocomplete="on">
-                        <!-- <input type="text" name="search" class="form-control" autocomplete="off" list="companynames"> -->
-                        <!-- <datalist id="companynames">
-                            {% for company in customers %}
-                            <option value="{{company.name_customer}}"></option>
-                            {% endfor %} -->
-                        <!-- <option value="emp 2"></option>
-                            <option value="emp 3"></option> -->
-                        <!-- </datalist> -->
+                        <div class="row form-group mt-1 mx-1">
+                            <label class="form-label" for="autocomplete">Digite uma empresa: </label>
+                            <input type="text" id="autocomplete" class="form-control" autocomplete="on">
+                            <input type="hidden" id="selected_customer" name="selected_customer">
+                            <script>
+                                var autocompleteInput = document.getElementById('autocomplete');
+                                var selectedCustomerInput = document.getElementById('selected_customer');
+
+                                autocompleteInput.addEventListener('change', function (event) {
+                                    selectedCustomerInput.value = event.target.value;
+                                });
+                            </script>
+                            <!-- <input type="text" name="search" class="form-control" autocomplete="off" list="companynames">
+                            <datalist id="companynames">
+                                {% for company in customers %}
+                                <option value="{{company.name_customer}}"></option>
+                                {% endfor %}
+                                <option value="emp 2"></option>
+                                <option value="emp 3"></option>
+                            </datalist> -->
+                        </div>
                         <div class="row form-group mt-1 mx-1">
                             {{ form_users.password.label(class="form-label") }}
                             {{ form_users.password(class="form-control") }}

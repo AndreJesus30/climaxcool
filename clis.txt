@@ -53,13 +53,19 @@ CRIAR TABLES
 CREATE TABLE Users (
     id INTEGER PRIMARY KEY,
     type_user TEXT NOT NULL,
-    username TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     status_user TEXT DEFAULT 'ATIVO',
     permission_user INTEGER DEFAULT 0,
-	company_user TEXT DEFAULT 'Climax Cool'
+	id_customer INTEGER NOT NULL, 
+	FOREIGN KEY (id_customer) REFERENCES Customers (id)
 );
+
+DROP TABLE Users_new
+
+ALTER TABLE Users
+DROP COLUMN company_user;
 
 CREATE TABLE Customers (
     id INTEGER PRIMARY KEY,
