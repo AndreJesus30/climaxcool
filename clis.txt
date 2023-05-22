@@ -92,8 +92,16 @@ CREATE TABLE Equipments (
     FOREIGN KEY (id_user) REFERENCES Users (id)
 );
 
+ALTER TABLE Equipments
+ADD COLUMN btus INTEGER;
+
+UPDATE Equipments
+SET btus = 12000
+WHERE id = 1;
+
 CREATE TABLE Services (
     id INTEGER PRIMARY KEY,
+    service TEXT NOT NULL,
     date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     annotations TEXT,
     price INTEGER,
@@ -105,15 +113,10 @@ CREATE TABLE Services (
     FOREIGN KEY (id_expert) REFERENCES Users (id)
 );
 
-CREATE TABLE ListForServices (
-    service TEXT NOT NULL,
-    id_service INTEGER PRIMARY KEY,
-    id_customer INTEGER NOT NULL,
-    id_equipment INTEGER NOT NULL,
-    FOREIGN KEY (id_service) REFERENCES Services (id),
-    FOREIGN KEY (id_customer) REFERENCES Customers (id),
-    FOREIGN KEY (id_equipment) REFERENCES Equipments (id)
-);
+
+
+
+
 
 ESCREVER SCRIPTS PADRÃO PARA EXECUTAR NO TERMINAL
 

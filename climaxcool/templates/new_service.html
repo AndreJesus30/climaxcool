@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="container-fluid row justify-content-center bg-dark vh-100">
+<div class="container-fluid row justify-content-center mx-0 bg-dark vh-100">
     <div class="container row justify-content-center pt-4 pb-2 mx-0 px-0 px-md-4 text-center vh-100">
         <div class="col-6 col-md-3">
             <a id="btn-historico" class="btn btn-outline-secondary w-100" href="{{url_for('report_service', equipment_id=equipment.id, customer_id=customer.id)}}">Histórico</a>
@@ -13,34 +13,30 @@
             <a id="btn-novo-servico" class="btn btn-outline-info w-100" href="{{url_for('new_service', equipment_id=equipment.id, customer_id=customer.id)}}">Novo Serviço</a>
         </div>
     </div>
-    <div class="container text-center text-light">
+    <div class="col-md-6 col-lg-5 text-center text-light">
         <form method="POST" action="" class="border p-4 mt-2 mb-2">
             {{ form_new_service.csrf_token }}
             <legend class="text-center">Cadastro de Serviço</legend>
 
             <div class=" text-left text-light">
-                <div class="row justify-content-center">
-                    <div class="col col-md-6">
-                        <span>{{customer.name_customer}}</span>
-                        <div class="bg-light rounded mt-1">
-                            <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">Fulano de Tal da Silva</p>
-                        </div>
+                <div class="">
+                    <span>Cliente:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.8rem;">{{customer.name_customer}}</p>
                     </div>
                 </div>
             </div>
 
-            <div class="row justify-content-center text-left text-light">
-                <div class="col col-md-6">
-                    <span>Equipamento:</span>
-                    <div class="bg-light rounded mt-1">
-                        <p class="px-2 py-1" style="color:black; font-size: 0.7rem;">{{equipment.name_equipment}}</p>
-                    </div>
+            <div class=" text-left text-light">
+                <span>Equipamento:</span>
+                <div class="bg-light rounded mt-1">
+                    <p class="px-2 py-1" style="color:black; font-size: 0.8rem;">{{equipment.name_equipment}}</p>
                 </div>
             </div>
 
             <fieldset>
-                <div class="row justify-content-center text-left">
-                    <div class=" col-md-6">
+                <div class="text-left">
+                    <div class="">
                         <ul class="list-group">
                             <span>Serviços:</span>
                             <li class="list-group-item small mt-1 bg-dark" id="servicos">
@@ -56,25 +52,25 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-2">
-                    <div class="text-left text-light col-md-6">
+                <div class="mt-2 text-left text-light">
+                    <div class="">
                         {{form_new_service.annotations.label(class="form-label")}}
-                        {{form_new_service.annotations(class="form-control")}}
+                        {{form_new_service.annotations(class="form-control", style="color:black; font-size: 0.8rem;")}}
                     </div>
                 </div>
                 <div class="row justify-content-center mt-2">
-                    <div class="col-8 col-md-4 text-left text-light">
+                    <div class="col-8 text-left text-light">
                         {{form_new_service.expert.label(class="form-label")}}
-                        {{form_new_service.expert(class="form-control")}}
+                        {{form_new_service.expert(class="form-control", style="color:black; font-size: 0.8rem;")}}
                     </div>
-                    <div class="col-4 col-md-2 text-left text-light">
+                    <div class="col-4 text-left text-light">
                         {{form_new_service.price.label(class="form-label")}}
-                        {{form_new_service.price(class="form-control")}}
+                        {{form_new_service.price(class="form-control", style="color:black; font-size: 0.8rem;")}}
                     </div>
                 </div>
             </fieldset>
             <div class="row justify-content-center mt-4">
-                <div class="col col-md-6  ">
+                <div class="col">
                     {{form_new_service.btn_submit_new_service(class="btn btn-primary w-100")}}
                 </div>
             </div>

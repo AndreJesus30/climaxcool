@@ -42,14 +42,16 @@ class FormUsersRegistration(FlaskForm):
     #company = StringField('Empresa', validators=[DataRequired()])
     btn_submit_user_registration = SubmitField('Cadastrar Usuário')
 
+list_brands = ["","Agratto","Britânia","Car Bluetooth","Comfee","Consul","Daikin","Elgin","Equation","Fontaine","Fujitsu","Philco","LG","Samsung","Carrier","Fujitsu","Gree","Electrolux","Springer Midea","TCL", "Outra"]
+list_btus = [7000,7500,9000,12000,15000,16000,18000,20000,24000,28000,30000,32000,36000,40000,42000,48000,58000,60000]
 
 class FormEquipmentsRegistration(FlaskForm):
-    name_equipment = TextAreaField('Nome', validators=[DataRequired()])
-    brand_equipment = StringField('Marca', validators=[DataRequired()])
+    brand_equipment = SelectField('Marca', validators=[DataRequired()], choices=list_brands)
+    btus_equipment = SelectField('BTUs', validators=[DataRequired()], choices=list_btus) 
     address = TextAreaField('Local', validators=[DataRequired()])
     qr_code = StringField('QR-Code')
     status_equipment = StringField('Status',default="Ativo")
-    customer = SelectField('Cliente', validators=[DataRequired()], choices=[' ','Empresa 1', 'Empresa 2', "Empresa 3", "João"]) 
+    customer = SelectField('Cliente', validators=[DataRequired()], choices=[' ']) 
     btn_submit_equip_registration = SubmitField('Cadastrar Equipamento')
 
 

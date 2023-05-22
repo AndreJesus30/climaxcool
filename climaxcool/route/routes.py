@@ -1,6 +1,6 @@
 from climaxcool import app
 from flask import render_template, url_for, redirect, request, jsonify, flash
-from climaxcool.models import Users, Customers, Equipments, Services, ListForServices
+from climaxcool.models import Users, Customers, Equipments, Services
 from climaxcool.shared import generate_code
 from climaxcool.forms import FormNewService, FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
 from climaxcool import database
@@ -187,7 +187,8 @@ def equipments_registration(customer_id):
             id_customer = Customers.query.filter_by(name_customer=name_customer).first().id;
             
             new_equipments = Equipments(
-                name_equipment=form_equipments.name_equipment.data,
+                name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,
+                btus_equipment=form_equipments.btus_equipment.data,
                 brand_equipment=form_equipments.brand_equipment.data, 
                 address=form_equipments.address.data,
                 qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
@@ -207,7 +208,8 @@ def equipments_registration(customer_id):
         if form_equipments.validate_on_submit():
             
             new_equipments = Equipments(
-                name_equipment=form_equipments.name_equipment.data,
+                name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,
+                btus_equipment=form_equipments.btus_equipment.data,
                 brand_equipment=form_equipments.brand_equipment.data, 
                 address=form_equipments.address.data,
                 qr_code= None if not form_equipments.qr_code.data else form_equipments.qr_code.data,
@@ -272,16 +274,22 @@ def equipment_summary_filter(customer_id):
 @app.route('/dashboard/cliente/novo-servico/<int:customer_id>/<int:equipment_id>', methods=["POST", "GET"])
 def new_service(customer_id, equipment_id):
     form_new_service = FormNewService()
-
     customer = Customers.query.filter_by(id=customer_id).first()
     equipment = Equipments.query.filter_by(id=equipment_id).first()
+    text_services = ""
 
     #if permissão total pode escolher qualquer técnico
     #senão só tem a opção de escolher ele mesmo como técnico
     #criar essas condições após terminar authenticação e estrutura de permissões
 
-    if form_new_service.validate_on_submit:
+    if form_new_service.validate_on_submit():
+        for service in form_new_service:
+            if "service_" in service.name and service.data:
+                print(f"{service.data}  {service.name}  {service.label.text}")
+                text_services += service.label.text + ","
+
         new_service = Services(
+            service = text_services,
             annotations = form_new_service.annotations.data,
             price = form_new_service.price.data,
             id_customer = customer_id,
@@ -290,25 +298,34 @@ def new_service(customer_id, equipment_id):
         )
         database.session.add(new_service)
         database.session.commit()
+        return redirect(url_for("report_service", equipment_id=equipment_id))
 
-        new_service_id = new_service.id
-        print(new_service_id)
+        #Código para pegar o id gravado no DB, creio que não será necessário
+        # new_service_id = new_service.id
+        # print(new_service_id)
+                
+        # quandor for consumir a lista de serviços no futuro é só
+        # splitar ela e fazer o pop() depois para remover o ultimo dado
+        # que neste caso está vindo uma string vazia.    
+        # print(text_services)
+        # list_service = text_services.split(",")
+        # list_service.pop()
+        # if len(list_service) > 2 :
+        #     print(list_service)
+        #     print(list_service[2])
 
-        if new_service_id is not None:
-            for service in form_new_service:
-                if "service_" in service.name and service.data:
-                    print(f"{service.data}  {service.name}  {service.label.text}")
-                    new_list_for_services = ListForServices(
-                        service = service.label.text,
-                        id_service = new_service_id,
-                        id_customer = customer_id,
-                        id_equipment = equipment_id,   
-                    )
-                    database.session.add(new_list_for_services)
-                    database.session.commit()
 
     return render_template('new_service.html', form_new_service=form_new_service, customer=customer, equipment=equipment)
 
+
+class report_service_model:
+    def __init__(self, id, date, list_services, annotations, expert, price):
+        self.id = id
+        self.date = date
+        self.list_services = list_services
+        self.annotations = annotations
+        self.expert = expert
+        self.price = price
 
 
 #acesso pelo id do equipamento seguido o fluxo do sistema
@@ -316,12 +333,30 @@ def new_service(customer_id, equipment_id):
 @app.route('/dashboard/cliente/relatorio-servico/<int:equipment_id>')
 def report_service(equipment_id):
     equipment = None
+    services_for_equipment = []
 
     if equipment_id is not None:
         equipment = Equipments.query.filter_by(id=equipment_id).first()
         customer = Customers.query.filter_by(id=equipment.id_customer).first();
+        services = Services.query.filter_by(id_equipment=equipment_id).all();
 
-    return render_template('report_service.html', equipment=equipment, customer=customer)  
+        for service in services:
+            expert = Users.query.filter_by(id=service.id_expert).first();
+            #Colocoar um delay neste ponto?
+            list_services = service.service.split(",")
+            list_services.pop()
+            print(f"lista de serviços {list_services}")
+            services_for_equipment.append( report_service_model(
+                id=service.id,
+                date= service.date_create,
+                list_services= list_services,
+                annotations= service.annotations,
+                expert= expert.username,
+                price= service.price,
+            )) 
+
+
+    return render_template('report_service.html', equipment=equipment, customer=customer, services=services_for_equipment)  
 
 
 #acesso pelo link (qrcode)

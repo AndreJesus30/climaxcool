@@ -36,6 +36,7 @@ class Customers(database.Model):
 class Equipments(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     name_equipment = database.Column(database.String, nullable=False)
+    btus_equipment = database.Column(database.Integer, nullable=False)
     brand_equipment = database.Column(database.String, nullable=False)
     address = database.Column(database.String, nullable=False)
     qr_code = database.Column(database.String, unique=True)
@@ -47,6 +48,7 @@ class Equipments(database.Model):
 
 class Services(database.Model):
     id = database.Column(database.Integer, primary_key=True)
+    service = database.Column(database.String, nullable=False)
     date_create = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
     annotations = database.Column(database.String) 
     price = database.Column(database.Integer)
@@ -54,11 +56,10 @@ class Services(database.Model):
     id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)  
     id_expert = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
 
-#Criar essa tabela novamente no banco, excluir e criar ela de novo, o problema
-#Pode ser no service que estava como primary_key, porém ele se repete na gravação
-class ListForServices(database.Model):
-    id = database.Column(database.Integer, primary_key=True)
-    service = database.Column(database.String, nullable=False)
-    id_service = database.Column(database.Integer, database.ForeignKey('services.id'), nullable=False)
-    id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False) 
-    id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)
+
+# class ListForServices(database.Model):
+#     id = database.Column(database.Integer, primary_key=True)
+#     service = database.Column(database.String, nullable=False)
+#     id_service = database.Column(database.Integer, database.ForeignKey('services.id'), nullable=False)
+#     id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False) 
+#     id_equipment = database.Column(database.Integer, database.ForeignKey('equipments.id'), nullable=False)
