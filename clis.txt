@@ -58,6 +58,7 @@ CREATE TABLE Users (
     password TEXT NOT NULL,
     status_user TEXT DEFAULT 'ATIVO',
     permission_user INTEGER DEFAULT 0,
+    date_last_update DATETIME,
 	id_customer INTEGER NOT NULL, 
 	FOREIGN KEY (id_customer) REFERENCES Customers (id)
 );
@@ -80,6 +81,7 @@ CREATE TABLE Customers (
     reference_point TEXT,
 	status_customer TEXT DEFAULT 'ATIVO',
     date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_update DATETIME,
     id_user INTEGER NOT NULL,
     FOREIGN KEY (id_user) REFERENCES Users (id)
 );

@@ -1,0 +1,71 @@
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div class="d-flex justify-content-center align-items-center bg-dark" style="padding-top: 30px; height: 100vh;">
+    <div class="bg-dark text-white">
+        <div class="col">
+            <div>
+                <form method="POST" action="" class="border p-4 mt-2 mb-2">
+                    {{ form_users.csrf_token }}
+                    <legend class="text-center">Cadastro de Usuários</legend>
+                    <fieldset>
+                        <!-- <div style="font-size: 16px;" class="text-center">
+                            {% for subfield in form_users.type_user %}
+                            <tr>
+                                <td>{{ subfield(style="height: 12px;") }}</td>
+                                <td>{{ subfield.label(class="my-2 mx-2") }}</td>
+                            </tr>
+                            {% endfor %}
+                        </div> -->
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.username.label(class="form-label") }}
+                            {{ form_users.username(class="form-control", placeholder="nome") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.email.label(class="form-label") }}
+                            {{ form_users.email(class="form-control", placeholder="exemplo@gmail.com") }}
+                        </div>
+                        <!-- <div class="row form-group mt-1 mx-1">
+                            <label class="form-label" for="autocomplete">Digite uma empresa: </label>
+                            <input type="text" id="autocomplete" class="form-control" autocomplete="on">
+                            <input type="hidden" id="selected_customer" name="selected_customer">
+                            <script>
+                                var autocompleteInput = document.getElementById('autocomplete');
+                                var selectedCustomerInput = document.getElementById('selected_customer');
+
+                                autocompleteInput.addEventListener('change', function (event) {
+                                    selectedCustomerInput.value = event.target.value;
+                                });
+                            </script>
+                        </div> -->
+                        <!-- <div class="row form-group mt-1 mx-1">
+                            {{ form_users.password.label(class="form-label") }}
+                            {{ form_users.password(class="form-control") }}
+                        </div> -->
+                        <!-- <div class="row form-group mt-1 mx-1">
+                            {{ form_users.password_check.label(class="form-label") }}
+                            {{ form_users.password_check(class="form-control") }}
+                        </div> -->
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.permission_user.label(class="form-label") }}
+                            {{ form_users.permission_user(class="form-control") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_users.status_user.label(class="form-label") }}
+                            {{ form_users.status_user(class="form-control w-100", rows="1") }}
+                        </div>
+                    </fieldset>
+                    <div class="w-auto">
+                        <button class="w-100 btn btn-primary mt-4 mb-2" type="submit">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

@@ -79,9 +79,13 @@
                             {{ form_customer.telephone_mobile.label(class="form-label") }}
                             {{ form_customer.telephone_mobile(class="form-control w-100", rows="1") }}
                         </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_customer.status_customer.label(class="form-label") }}
+                            {{ form_customer.status_customer(class="form-control w-100", rows="1") }}
+                        </div>
                     </fieldset>
                     <div class="w-auto">
-                        {{ form_customer.btn_submit_customer(class="w-100 btn btn-primary mt-4 mb-2") }}
+                        <button class="w-100 btn btn-primary mt-4 mb-2" type="submit">Salvar Alterações</button>
                     </div>
                 </form>
             </div>

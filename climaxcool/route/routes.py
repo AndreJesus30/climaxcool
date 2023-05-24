@@ -5,6 +5,8 @@ from climaxcool.shared import generate_code
 from climaxcool.forms import FormNewService, FormSignIn, FormCustomerRegistration, FormUsersRegistration, FormEquipmentsRegistration
 from climaxcool import database
 from flask_login import login_user, logout_user, current_user, login_required
+from datetime import datetime
+from sqlalchemy.exc import SQLAlchemyError
 
 generate_qrcodes = 'Função Gerar QR Codes'
 list_qrcodes = ['qr1', 'qr2', 'qr3', 'qr4', 'qr5', 'qr6',]
@@ -120,7 +122,7 @@ def customers_registration():
             telephone_fixed= form_customer.telephone_fixed.data,
             telephone_mobile= form_customer.telephone_mobile.data,
             reference_point= form_customer.reference_point.data,
-            id_user= 1
+            id_user= current_user.id
         )
         database.session.add(new_customer)
         database.session.commit()
@@ -128,6 +130,58 @@ def customers_registration():
         flash('Cliente cadastrado com sucesso', 'alert-success'),
         return redirect(url_for('dashboard_customers'))
     return render_template('customer_registration.html', form_customer=form_customer)
+
+
+@app.route('/edicao-cliente/<customer_id>', methods=['POST', 'GET'])
+@login_required
+def customers_update(customer_id):
+    customer = Customers.query.get(int(customer_id))
+
+    form_customer = FormCustomerRegistration(
+        type_customer= customer.type_customer,
+        number_register_customer= customer.number_register_customer,
+        name_customer= customer.name_customer,
+        name_responsible= customer.name_responsible,
+        email= customer.email,
+        address= customer.address,
+        telephone_fixed= customer.telephone_fixed,
+        telephone_mobile= customer.telephone_mobile,
+        reference_point= customer.reference_point,
+        status_customer= customer.status_customer
+        )
+    
+    form_customer.edit_mode.data = 'True'
+
+    if form_customer.validate_on_submit():
+        print('form_validado')
+        customer.number_register_customer=form_customer.number_register_customer.data
+        customer.type_customer=form_customer.type_customer.data
+        customer.number_register_customer=form_customer.number_register_customer.data
+        customer.name_customer=form_customer.name_customer.data
+        customer.name_responsible=form_customer.name_responsible.data
+        customer.email=form_customer.email.data
+        customer.address=form_customer.address.data
+        customer.telephone_fixed=form_customer.telephone_fixed.data
+        customer.telephone_mobile=form_customer.telephone_mobile.data
+        customer.reference_point= form_customer.reference_point.data
+        customer.status_customer= form_customer.status_customer.data
+        customer.id_user= current_user.id
+        customer.date_last_update= datetime.utcnow()
+
+        try:
+            database.session.commit()
+            flash('Cliente editado com sucesso.', 'alert-success')
+            return redirect(url_for('dashboard_customers'))
+        
+        except SQLAlchemyError as e:
+            database.session.rollback()
+            flash('Houve um problema na edição, verifique os dados e tente novamenteeee.', 'alert-danger')
+
+    if form_customer.errors:
+        print(form_customer.errors)
+       
+
+    return render_template('customer_update.html', form_customer=form_customer)
 
 
 # pip install flask-bcrypt
@@ -164,9 +218,54 @@ def users_registration():
     return render_template('users_registration.html', form_users=form_users, customers=customers)
 
 
+@app.route('/edicao-usuario/<user_id>', methods=['GET', 'POST'])
+@login_required
+def users_update(user_id):
+    user = Users.query.get(int(user_id))
+
+    form_user = FormUsersRegistration(
+        type_user = user.type_user,
+        username=user.username, 
+        email= user.email,
+        password=user.password,
+        password_check=user.password,
+        permission_user= user.permission_user,
+        )
+    
+    form_user.edit_mode.data = 'True'
+
+    if form_user.edit_mode.data:
+        form_user.password.validators = []
+        form_user.password_check.validators = []
+
+    if form_user.validate_on_submit():
+        print('form_validado')
+        user.username=form_user.username.data 
+        user.email= form_user.email.data
+        user.password=form_user.password.data
+        user.permission_user= form_user.permission_user.data
+        user.status_user = form_user.status_user.data
+        user.date_last_update= datetime.utcnow()
+
+        try:
+            database.session.commit()
+            flash('Usuário editado com sucesso.', 'alert-success')
+            return redirect(url_for('dashboard_users'))
+        
+        except SQLAlchemyError as e:
+            database.session.rollback()
+            flash('Houve um problema na edição, verifique os dados e tente novamente.', 'alert-danger')
+
+    if form_user.errors:
+        print(form_user.errors)
+        
+
+    return render_template('users_update.html', form_users=form_user)
+
+
 @app.route('/editar-usuarios', methods=['GET', 'POST'])
 @login_required
-def users_edit():
+def users_edit_password():
     #password = pegar dado da senha
     #password_crypt = bcrypt.generate_password_hash(password)
     #para usar depois de gravado no banco seria
@@ -218,7 +317,7 @@ def equipments_registration(customer_id):
             database.session.add(new_equipments)
             database.session.commit()
             flash('Equipamento cadastrado com sucesso', 'alert-success')
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('dashboard_customers'))
 
     if customer_id:
         form_equipments = FormEquipmentsRegistration()

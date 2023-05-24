@@ -13,7 +13,7 @@
 
         </div>
         <div class="row text-center justify-content-center p-1">
-            <div class="col-12 col-lg-6 mb-4 mr-1">
+            <div class="col-12 col-lg-6 mb-4 mr-0">
                 <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
@@ -27,7 +27,7 @@
 
         {% if type_data == 'clientes' %}
         {%for customer in customers%}
-        <div class="row justify-content-center ">
+        <div class="row justify-content-center px-1">
             <div class="col-lg-6">
                 <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{ customer.name_customer}}</button>
             </div>
@@ -41,7 +41,7 @@
                         <p class="card-subtitle mb-4 text-muted">Email: {{customer.email}}</p>
                         <div class="row justify-content-center">
                             <a href="{{ url_for('equipment_summary', customer_id=customer.id) }}" class="card-link">Serviços</a>
-                            <a href="#" class="card-link">Detalhes</a>
+                            <a href="{{ url_for('customers_update', customer_id=customer.id) }}" class="card-link">Editar</a>
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
 
         {% if type_data == 'usuarios' %}
         {%for customer in customers%}
-        <div class="row justify-content-center ">
+        <div class="row justify-content-center px-1">
             <div class="col-lg-6">
                 <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{customer.username}}</button>
             </div>
@@ -64,7 +64,14 @@
                         <p class="card-subtitle mb-2 text-muted">Email: {{customer.email }}</p>
                         <p class="card-subtitle mb-2 text-muted">Tipo: {{customer.type_user }}</p>
                         <div class="row justify-content-center">
-                            <a href="#" class="card-link">Detalhes</a>
+                            <a class="btn btn-outline-secondary btn-sm" href="{{url_for('users_update', user_id=customer.id)}}">Editar</a>
+                            <button class="btn ml-3 btn-outline-dark btn-sm">Resetar senha</button>
+                            {%if customer.status_user == "ATIVO"%}
+                            <button class="btn ml-3 btn-outline-dark btn-sm">Inativar</button>
+                            {%else%}
+                            <button class="btn ml-3 btn-outline-dark btn-sm">Ativar</button>
+                            {%endif%}
+                            <button class="btn ml-3 btn-outline-dark btn-sm">Excluir</button>
                         </div>
                     </div>
                 </div>

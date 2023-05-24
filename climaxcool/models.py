@@ -18,6 +18,7 @@ class Users(database.Model, UserMixin):
     permission_user = database.Column(database.Integer, default=0)
     # customer = database.relationship('Customers', backref='created_by_user', lazy=True)
     equipment = database.relationship('Equipments', backref='created_by_user', lazy=True)
+    date_last_update = database.Column(database.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False)
 
 
@@ -34,6 +35,7 @@ class Customers(database.Model):
     reference_point = database.Column(database.String)
     status_customer = database.Column(database.String, default="ATIVO")
     date_create = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+    date_last_update = database.Column(database.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     id_user = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
     equipment = database.relationship('Equipments', backref='company_asset', lazy=True)
 

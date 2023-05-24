@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FloatField, DateTimeField, SelectField, TextAreaField,  IntegerField, RadioField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, FloatField, DateTimeField, SelectField, TextAreaField, HiddenField, RadioField, BooleanField 
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional, NumberRange
-from climaxcool.models import Users
+from climaxcool.models import Users, Customers
 
 
 # class FormSignUp(FlaskForm):
@@ -19,6 +19,7 @@ class FormSignIn(FlaskForm):
 
 
 class FormCustomerRegistration(FlaskForm):
+    edit_mode = HiddenField()
     type_customer = RadioField('Tipo de Cliente', choices=["Pessoa Jurídica", "Pessoa Física"], validators=[DataRequired()]) 
     number_register_customer =  StringField('CNPJ')
     name_customer = StringField('Nome Fantasia', validators=[DataRequired()])
@@ -28,31 +29,47 @@ class FormCustomerRegistration(FlaskForm):
     telephone_fixed = StringField('Telefone Fixo')
     telephone_mobile = StringField('Celular')
     reference_point = TextAreaField('Ponto de Referencia')
+    status_customer = SelectField('Status', choices=['ATIVO', 'INATIVO']) 
     btn_submit_customer = SubmitField('Cadastrar Cliente')
+
+    def validate_number_register_customer(self, number_register_customer):
+        if self.edit_mode.data == 'True':
+            return  # Ignora a validação durante a edição
+        
+        customer = Customers.query.filter_by(number_register_customer=number_register_customer.data).first()
+        if customer:
+            raise ValidationError('Já existe um cliente cadastrado com esse numero.')
+        pass
+
+    def validate_email(self, email):
+        if self.edit_mode.data == 'True':
+            return  # Ignora a validação durante a edição
+        
+        customer = Users.query.filter_by(email=email.data).first()
+        if customer:
+            raise ValidationError('Esse e-mail já foi cadastrado em outro cliente')
+        pass
 
 
 class FormUsersRegistration(FlaskForm):
+    edit_mode = HiddenField()
     type_user = RadioField('Tipo de Usuário', choices=["Funcionário", "Externo"],  validators=[DataRequired()]) 
     username = StringField('Nome Completo', validators=[DataRequired(), Length(3, 50)])
     email = StringField('E-mail', validators=[Optional(), Email()])
     password = PasswordField('Senha', validators=[DataRequired(), Length(6, 20)])
     password_check = PasswordField('Confirmação de Senha', validators=[DataRequired(), EqualTo('password')])
     permission_user = StringField('Permissão', validators=[DataRequired()]) 
-    #status_user = StringField('Status Usuário', validators=[DataRequired()])
-    #fazer vinculo do texto com o numero da permissão 0, 1, 2..
-    #company = StringField('Empresa', validators=[DataRequired()])
+    status_user = SelectField('Status', choices=['ATIVO', 'INATIVO']) 
     btn_submit_user_registration = SubmitField('Cadastrar Usuário')
 
     def validate_username(self, username):
-        user = Users.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError('Já existe um usuário com esse nome cadastrado')
-        pass
-
-    def validate_email(self, email):
-        user = Users.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError('Esse e-mail já foi cadastrado em outro usuário')
+        if self.edit_mode.data == 'True':
+            return  # Ignora a validação durante a edição
+        
+        if self.edit_mode.data == 'True':
+            user = Users.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError('Já existe um usuário com esse nome cadastrado')
         pass
 
 
