@@ -64,14 +64,14 @@
                         <p class="card-subtitle mb-2 text-muted">Email: {{customer.email }}</p>
                         <p class="card-subtitle mb-2 text-muted">Tipo: {{customer.type_user }}</p>
                         <div class="row justify-content-center">
-                            <a class="btn btn-outline-secondary btn-sm" href="{{url_for('users_update', user_id=customer.id)}}">Editar</a>
-                            <button class="btn ml-3 btn-outline-dark btn-sm">Resetar senha</button>
-                            {%if customer.status_user == "ATIVO"%}
-                            <button class="btn ml-3 btn-outline-dark btn-sm">Inativar</button>
-                            {%else%}
-                            <button class="btn ml-3 btn-outline-dark btn-sm">Ativar</button>
-                            {%endif%}
-                            <button class="btn ml-3 btn-outline-dark btn-sm">Excluir</button>
+                            <a class="btn btn-outline-secondary btn-sm" href="{{url_for('user_update', user_id=customer.id)}}">Editar</a>
+                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/resetar-senha/{{customer.id}}';">Resetar senha</button>
+                            {% if customer.status_user == "ATIVO" %}
+                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status/{{customer.id}}';">Inativar</button>
+                            {% else %}
+                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status/{{customer.id}}';">Ativar</button>
+                            {% endif %}
+                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/deletar-usuario/{{customer.id}}';">Excluir</button>
                         </div>
                     </div>
                 </div>

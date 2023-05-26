@@ -19,4 +19,4 @@ login_manager.login_message_category = 'alert-info'
 # with app.app_context():
 #     database.create_all()
 
-from climaxcool.route import routes
+from climaxcool.routes import routes

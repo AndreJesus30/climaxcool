@@ -31,5 +31,5 @@
 }
 
 .flash-message.fade-out {
-  animation: fadeOut 2s forwards;
+  animation: fadeOut 3s forwards;
 }

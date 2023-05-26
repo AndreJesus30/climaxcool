@@ -29,7 +29,7 @@ class FormCustomerRegistration(FlaskForm):
     telephone_fixed = StringField('Telefone Fixo')
     telephone_mobile = StringField('Celular')
     reference_point = TextAreaField('Ponto de Referencia')
-    status_customer = SelectField('Status', choices=['ATIVO', 'INATIVO']) 
+    status_customer = SelectField('Status',validators=[Optional()], choices=['ATIVO', 'INATIVO']) 
     btn_submit_customer = SubmitField('Cadastrar Cliente')
 
     def validate_number_register_customer(self, number_register_customer):
@@ -59,7 +59,7 @@ class FormUsersRegistration(FlaskForm):
     password = PasswordField('Senha', validators=[DataRequired(), Length(6, 20)])
     password_check = PasswordField('Confirmação de Senha', validators=[DataRequired(), EqualTo('password')])
     permission_user = StringField('Permissão', validators=[DataRequired()]) 
-    status_user = SelectField('Status', choices=['ATIVO', 'INATIVO']) 
+    status_user = SelectField('Status', validators=[Optional()], choices=['ATIVO', 'INATIVO']) 
     btn_submit_user_registration = SubmitField('Cadastrar Usuário')
 
     def validate_username(self, username):
