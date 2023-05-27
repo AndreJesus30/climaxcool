@@ -1,0 +1,71 @@
+{% block title %} Edição de Serviço {% endblock %}
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div style="padding-top: 60px; height: 120vh;" class=" container-fluid row justify-content-center mx-0 bg-dark">
+    <div class="col-md-6 col-lg-5 text-center text-light">
+
+        <form method="POST" action="" class="border p-4 mt-2 mb-2">
+            {{ form_service.csrf_token }}
+            <legend class="text-center">Edição de Serviço</legend>
+            <div class=" text-left text-light">
+                <div class="">
+                    <span>Cliente:</span>
+                    <div class="bg-light rounded mt-1">
+                        <p class="px-2 py-1" style="color:black; font-size: 0.8rem;">{{customer.name_customer}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" text-left text-light">
+                <span>Equipamento:</span>
+                <div class="bg-light rounded mt-1">
+                    <p class="px-2 py-1" style="color:black; font-size: 0.8rem;">{{equipment.name_equipment}}</p>
+                </div>
+            </div>
+            <fieldset>
+                <div class="text-left">
+                    <div class="">
+                        <ul class="list-group">
+                            <span>Serviços:</span>
+                            <li class="list-group-item small mt-1 bg-dark" id="servicos">
+                                {%for service in form_service%}
+                                {%if 'service_' in service.name%}
+                                <div class="form-group m-0 px-1">
+                                    {{ service(class="form-check-input") }}
+                                    {{ service.label(class="form-check-label text-secondary") }}
+                                </div>
+                                {%endif%}
+                                {%endfor%}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mt-2 text-left text-light">
+                    <div class="">
+                        {{form_service.annotations.label(class="form-label")}}
+                        {{form_service.annotations(class="form-control", style="color:black; font-size: 0.8rem;")}}
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2">
+                    <div class="col-8 text-left text-light">
+                        {{form_service.expert.label(class="form-label")}}
+                        {{form_service.expert(class="form-control", style="color:black; font-size: 0.8rem;")}}
+                    </div>
+                    <div class="col-4 text-left text-light">
+                        {{form_service.price.label(class="form-label")}}
+                        {{form_service.price(class="form-control", style="color:black; font-size: 0.8rem;")}}
+                    </div>
+                </div>
+            </fieldset>
+            <div class="w-auto">
+                <button class="w-100 btn btn-primary mt-4 mb-2" type="submit">Salvar Alterações</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

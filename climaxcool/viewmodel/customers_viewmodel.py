@@ -39,7 +39,7 @@ class Customers_ViewModel():
 
 
     def customers_update(self, customer_id):
-        customer = repo_customers.get_customers_by_id(customer_id)
+        customer = repo_customers.get_customer_by_id(customer_id)
 
         form_customer = FormCustomerRegistration(
             type_customer= customer.type_customer,
@@ -86,3 +86,17 @@ class Customers_ViewModel():
         
 
         return render_template('customer_update.html', form_customer=form_customer)
+    
+
+    def customer_change_status(self, customer_id):
+        customer = repo_customers.get_customer_by_id(customer_id)
+
+        if customer and customer.status_customer == "ATIVO":
+            customer.status_customer = "INATIVO"
+            repo_customers.commit_update_customer('Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
+            return redirect(url_for('dashboard_customers'))
+        
+        else:
+            customer.status_customer = "ATIVO"
+            repo_customers.commit_update_customer('Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
+            return redirect(url_for('dashboard_customers'))     

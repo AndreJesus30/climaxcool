@@ -1,14 +1,17 @@
 from flask import render_template, url_for, redirect, request, flash
 from flask_login import current_user
 from climaxcool.models import Users, Customers, Equipments
-from climaxcool.repository.repo_customers import Repo_Customers
 from climaxcool.forms import FormEquipmentsRegistration
 from climaxcool import database
 from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 
+from climaxcool.repository.repo_customers import Repo_Customers
+from climaxcool.repository.repo_equipments import Repo_Equipments
+
 
 repo_customers = Repo_Customers()
+repo_equipments = Repo_Equipments()
 
 class Equipments_ViewModel():
 
@@ -89,3 +92,53 @@ class Equipments_ViewModel():
             equipments_filter = [];     
 
         return render_template('summary_equipments.html', customer=customer, equipments=equipments_filter)   
+
+
+    def equipment_update(self, equipment_id):
+        equipment = repo_equipments.get_equipment_by_id(equipment_id)
+        customer = repo_customers.get_customer_by_id(equipment.id_customer)
+
+        print(customer.name_customer)
+
+        form_equipment = FormEquipmentsRegistration(
+            brand_equipment = equipment.brand_equipment,
+            btus_equipment = equipment.btus_equipment,
+            address = equipment.address,
+            qr_code = equipment.qr_code,
+            status_equipment = equipment.status_equipment,
+        )
+        
+        form_equipment.customer.choices = [customer.name_customer]
+        form_equipment.edit_mode.data = 'True'
+
+        if form_equipment.validate_on_submit():
+            print('form_validado')
+            equipment.brand_equipment=form_equipment.brand_equipment.data
+            equipment.btus_equipment=form_equipment.btus_equipment.data
+            equipment.address=form_equipment.address.data
+            equipment.qr_code= None if not form_equipment.qr_code.data else form_equipment.qr_code.data
+            equipment.status_equipment=form_equipment.status_equipment.data
+        #   equipment.date_last_update= datetime.utcnow()
+
+            repo_equipments.commit_update_equipment(customer.id, 'Equipamento editado com sucesso.', 'Houve um problema na edição, verifique os dados e tente novamenteeee.')
+            return redirect(url_for('equipment_summary', customer_id=customer.id))
+
+        if form_equipment.errors:
+            print(form_equipment.errors)
+
+        return render_template('equipments_update.html', form_equipment=form_equipment)
+    
+
+    def equipment_change_status(self, equipment_id):
+        equipment = repo_equipments.get_equipment_by_id(equipment_id)
+        customer = repo_customers.get_customer_by_id(equipment.id_customer)
+
+        if equipment and equipment.status_equipment == "ATIVO":
+            equipment.status_equipment = "INATIVO"
+            repo_equipments.commit_update_equipment(customer.id,'Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
+            return redirect(url_for('equipment_summary', customer_id=customer.id))
+
+        else:
+            equipment.status_equipment = "ATIVO"
+            repo_equipments.commit_update_equipment(customer.id,'Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
+            return redirect(url_for('equipment_summary', customer_id=customer.id))  

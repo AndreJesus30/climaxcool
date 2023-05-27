@@ -16,8 +16,8 @@ class Repo_Users():
         users = Users.query.order_by(Users.name_customer).all();
         return users
 
-    def get_user_filter_by(self, selected_customer):
-        user = Users.query.filter_by(name_customer=selected_customer).first();
+    def get_user_filter_by(self, selected_user):
+        user = Users.query.filter_by(username=selected_user).first();
         return user 
 
     def commit_update_user(self, msg_sucess, msg_fail):

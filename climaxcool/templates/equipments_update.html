@@ -1,0 +1,59 @@
+{% extends 'nav_logged.html' %}
+
+{% block bodynav %}
+
+
+<div class="d-flex justify-content-center align-items-center bg-dark" style="padding-top: 30px; height: 100vh;">
+    <div class="bg-dark text-white">
+        <div class="col">
+            <div>
+                <form method="POST" action="" class="border p-4 mt-2 mb-2">
+                    {{ form_equipment.csrf_token }}
+                    <legend class="text-center">Cadastro de Ar Condicionado</legend>
+                    <fieldset>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipment.brand_equipment.label(class="form-label") }}
+                            {% if form_equipment.brand_equipment.errors %}
+                            {{ form_equipment.brand_equipment(class="form-control is-invalid px-2", rows="1") }}
+                            <div class="invalid-feedback">
+                                {% for erro in form_equipment.brand_equipment.errors %}
+                                {{ erro }}
+                                {% endfor%}
+                            </div>
+                            {% else %}
+                            {{ form_equipment.brand_equipment(class="form-control px-2", rows="1") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group mt-1 mx-1">
+                            {{ form_equipment.btus_equipment.label(class="form-label") }}
+                            {{ form_equipment.btus_equipment(class="form-control px-2", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipment.address.label(class="form-label") }}
+                            {{ form_equipment.address(class="form-control w-100", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipment.qr_code.label(class="form-label col-12 text-left px-0") }}
+                            {{ form_equipment.qr_code(class="form-control w-100 col-10", style="border-top-right-radius: 0; border-bottom-right-radius: 0", rows="1") }}
+                            <button class="btn col-2 btn-outline-primary" style="border-top-left-radius: 0; border-bottom-left-radius: 0">QR</button>
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipment.customer.label(class="form-label") }}
+                            {{ form_equipment.customer(class="form-control w-100 px-2", rows="1") }}
+                        </div>
+                        <div class="row form-group mt-1 mx-1">
+                            {{ form_equipment.status_equipment.label(class="form-label") }}
+                            {{ form_equipment.status_equipment(class="form-control w-100", rows="1") }}
+                        </div>
+                    </fieldset>
+                    <div class="w-auto">
+                        <button class="w-100 btn btn-primary mt-4 mb-2" type="submit">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

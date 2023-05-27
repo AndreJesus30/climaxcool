@@ -9,7 +9,7 @@ from climaxcool.viewmodel.customers_viewmodel import Customers_ViewModel
 from climaxcool.viewmodel.dashboard_viewmodel import Dashboard_ViewModel
 from climaxcool.viewmodel.equipments_viewmodel import Equipments_ViewModel
 from climaxcool.viewmodel.login_viewmodel import Login_ViewModel
-from climaxcool.viewmodel.services_viewmode import Services_ViewModel
+from climaxcool.viewmodel.services_viewmodel import Services_ViewModel
 from climaxcool.viewmodel.users_viewmodel import User_ViewModel
 
 
@@ -56,6 +56,13 @@ def logout():
     return redirect(url_for('home'))
 
 
+@app.route('/recuperar-senha', methods=['GET', 'POST'])
+@login_required
+def login_change_password():
+    login_change_password = login_viewmodel.login_change_password()
+    return login_change_password
+
+
 ### DASHBOARD
 
 
@@ -97,6 +104,13 @@ def customers_update(customer_id):
     return customers_update
 
 
+@app.route('/alterar-status-cliente/<customer_id>', methods=['POST', 'GET'])
+@login_required
+def customer_change_status(customer_id):
+    customer_change_status = customers_viewmodel.customer_change_status(customer_id)
+    return customer_change_status
+
+
 ### USUARIOS
 
 # pip install flask-bcrypt
@@ -128,7 +142,7 @@ def user_reset_password(user_id):
     return users_reset_password
 
 
-@app.route('/alterar-status/<user_id>', methods=['GET', 'POST'])
+@app.route('/alterar-status-usuario/<user_id>', methods=['GET', 'POST'])
 def user_change_status(user_id):
     user_change_status = user_viewmodel.user_change_status(user_id)
     return user_change_status 
@@ -160,6 +174,9 @@ def product_suggestions(value):
     return jsonify(suggestions)
 
 
+### EQUIPAMENTOS
+
+
 @app.route('/cadastro-ar-condicionado/', methods=["GET", "POST"], defaults={'customer_id': None})
 @app.route('/cadastro-ar-condicionado/<customer_id>', methods=["GET", "POST"])
 @login_required
@@ -182,6 +199,25 @@ def equipment_summary_filter(customer_id):
     return equipment_summary_filter
 
 
+@app.route('/dashboard/cliente/servicos/equipamento/<equipment_id>', methods=['GET', 'POST'])
+@login_required
+def equipment_update(equipment_id):
+    equipment_update = equipments_viewmodel.equipment_update(equipment_id)
+    return equipment_update
+
+
+@app.route('/dashboard/cliente/servicos/equipamento/alterar-status-equipamento/<equipment_id>', methods=['GET', 'POST'])
+@login_required
+def equipment_change_status(equipment_id):
+    equipment_change_status = equipments_viewmodel.equipment_change_status(equipment_id)
+    return equipment_change_status
+
+
+
+### SERVIÇOS
+
+
+
 @app.route('/dashboard/cliente/novo-servico/<int:customer_id>/<int:equipment_id>', methods=["POST", "GET"])
 @login_required
 def new_service(customer_id, equipment_id):
@@ -196,6 +232,12 @@ def new_service(customer_id, equipment_id):
 def report_service(equipment_id):
     report_service = services_viewmodel.report_service(equipment_id)
     return report_service
+
+
+@app.route('/dashboard/cliente/atualizar-servico/<int:service_id>/<int:equipment_id>/<int:customer_id>', methods=["GET", "POST"])
+def update_service(service_id, equipment_id, customer_id):
+    update_service = services_viewmodel.update_service(service_id, equipment_id, customer_id)
+    return update_service
 
 
 #acesso pelo link (qrcode)

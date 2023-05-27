@@ -28,11 +28,17 @@
                 {%for equipment in equipments%}
                 <div style="background-color: white;" class="rounded py-2 my-1 text-center col-12 col-lg-6 mb-2 mr-1">
                     <p class="my-0">{{equipment.name_equipment}}</p>
-                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="">Editar</a>
+                    <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('equipment_update', equipment_id=equipment.id)}}">Editar</a>
                     <span> - </span>
                     <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('report_service', equipment_id=equipment.id)}}">Histórico</a>
                     <span> - </span>
                     <a style="font-size: 0.8rem;" class="mx-1 align-items-center" href="{{url_for('new_service', customer_id=customer.id, equipment_id=equipment.id)}}">Novo Serviço</a>
+                    <span> - </span>
+                    {% if equipment.status_equipment == "ATIVO" %}
+                    <a style="font-size: 0.8rem;" href="{{ url_for('equipment_change_status', equipment_id=equipment.id) }}" class="card-link">Inativar</a>
+                    {% else %}
+                    <a style="font-size: 0.8rem;" href="{{ url_for('equipment_change_status', equipment_id=equipment.id) }}" class="card-link">Ativar</a>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

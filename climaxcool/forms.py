@@ -4,18 +4,41 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from climaxcool.models import Users, Customers
 
 
-# class FormSignUp(FlaskForm):
-#     username = StringField('Nome Completo', validators=[DataRequired(), Length(2, 50)])
-#     email = StringField('E-mail', validators=[DataRequired(), Email()])
-#     password = PasswordField('Senha', validators=[DataRequired(), Length(6, 20)])
-#     password_check = PasswordField('Confirmação da Senha', validators=[DataRequired(), EqualTo('password')])
-#     btn_submit_signUp = SubmitField('Criar Conta')
-
 
 class FormSignIn(FlaskForm):
     username = StringField('Usuário', validators=[DataRequired()])
     password = PasswordField('Senha', validators=[DataRequired(), Length(6, 20)])
     btn_submit_signIn = SubmitField('Fazer Login')
+
+
+user = Users()
+
+class FormChangePassword(FlaskForm):
+    username = StringField('Usuário', validators=[DataRequired()])
+    password = PasswordField('Senha atual', validators=[DataRequired(), Length(6, 20)])
+    new_password = PasswordField('Nova Senha', validators=[DataRequired(), Length(6, 20)])
+    new_password_confirmed = PasswordField('Confirmar Senha', validators=[DataRequired() , Length(6, 20), EqualTo('new_password')])
+    btn_submit_signIn = SubmitField('Alterar Senha')
+
+
+    def validate_username(self, username):
+        global user
+        user = Users.query.filter_by(username=username.data).first()
+        if not user:
+            raise ValidationError('Usuário não existe em nosso banco de dados.')
+        
+        pass
+
+    def validate_password(self, password):
+        global user
+
+        if user:
+            if user.password != password.data:
+                raise ValidationError('A senha digitada está errada.')
+
+        pass
+
+         
 
 
 class FormCustomerRegistration(FlaskForm):
@@ -45,7 +68,7 @@ class FormCustomerRegistration(FlaskForm):
         if self.edit_mode.data == 'True':
             return  # Ignora a validação durante a edição
         
-        customer = Users.query.filter_by(email=email.data).first()
+        customer = Customers.query.filter_by(email=email.data).first()
         if customer:
             raise ValidationError('Esse e-mail já foi cadastrado em outro cliente')
         pass
@@ -66,22 +89,30 @@ class FormUsersRegistration(FlaskForm):
         if self.edit_mode.data == 'True':
             return  # Ignora a validação durante a edição
         
-        if self.edit_mode.data == 'True':
-            user = Users.query.filter_by(username=username.data).first()
-            if user:
-                raise ValidationError('Já existe um usuário com esse nome cadastrado')
+        user = Users.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('Já existe um usuário com esse nome cadastrado')
         pass
 
+    def validate_email(self, email):
+        if self.edit_mode.data == 'True':
+            return  # Ignora a validação durante a edição
+        
+        user = Users.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Esse e-mail já foi cadastrado em outro usuário')
+        pass    
 
 list_brands = ["","Agratto","Britânia","Car Bluetooth","Comfee","Consul","Daikin","Elgin","Equation","Fontaine","Fujitsu","Philco","LG","Samsung","Carrier","Fujitsu","Gree","Electrolux","Springer Midea","TCL", "Outra"]
 list_btus = [7000,7500,9000,12000,15000,16000,18000,20000,24000,28000,30000,32000,36000,40000,42000,48000,58000,60000]
 
 class FormEquipmentsRegistration(FlaskForm):
+    edit_mode = HiddenField()
     brand_equipment = SelectField('Marca', validators=[DataRequired()], choices=list_brands)
     btus_equipment = SelectField('BTUs', validators=[DataRequired()], choices=list_btus) 
     address = TextAreaField('Local', validators=[DataRequired()])
     qr_code = StringField('QR-Code')
-    status_equipment = StringField('Status',default="Ativo")
+    status_equipment = SelectField('Status', validators=[Optional()], choices=['ATIVO', 'INATIVO'])
     customer = SelectField('Cliente', validators=[DataRequired()], choices=[' ']) 
     btn_submit_equip_registration = SubmitField('Cadastrar Equipamento')
 

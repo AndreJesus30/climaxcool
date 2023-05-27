@@ -1,47 +1,56 @@
 {% extends 'nav_logged.html' %}
 
 {% block bodynav %}
-<div style="padding-top: 70px; height: 140vh;" class="container-fluid bg-dark">
-    <div class="container">
-        <div class="row text-center justify-content-center p-1">
-            <div class="col-6 col-lg-3 mb-2 pr-1">
-                <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/clientes';">Clientes</button>
+<div style="padding-top: 70px; height: 140vh;" class="container-fluid bg-dark px-0">
+    <div class="container-fluid bg-dark mx-0 px-0">
+        <div class="container">
+            <div class="row text-center justify-content-center p-1 px-0">
+                <div class="col-6 col-lg-3 mb-2 pr-1">
+                    <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/clientes';">Clientes</button>
+                </div>
+                <div class="col-6 col-lg-3 mb-2 pl-0">
+                    <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/usuarios';">Usuários</button>
+                </div>
             </div>
-            <div class="col-6 col-lg-3 mb-2 pl-0">
-                <button type="button" class="btn btn-primary btn-lg w-100" onclick="window.location.href = '/dashboard/usuarios';">Usuários</button>
-            </div>
-
-        </div>
-        <div class="row text-center justify-content-center p-1">
-            <div class="col-12 col-lg-6 mb-4 mr-0">
-                <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-primary" id="button-addon2" type="submit">Pesquisar</button>
+            <div class="row text-center justify-content-center p-1">
+                <div class="col-12 col-lg-6 mb-4 mr-0">
+                    <form id="formAction" method="GET" action="{{ url_for('dashboard_customers') }}">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="name_customer_input" placeholder="Digite um nome" aria-label="Digite um nome" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" id="button-addon2" type="submit">Pesquisar</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
 
         {% if type_data == 'clientes' %}
         {%for customer in customers%}
-        <div class="row justify-content-center px-1">
-            <div class="col-lg-6">
-                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{ customer.name_customer}}</button>
+        <div class="container">
+            <div class="row justify-content-center px-1">
+                <div class="col-lg-6">
+                    <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{ customer.name_customer}}</button>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center px-1">
-            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-{{customer.id}}">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <p class="card-title">CNPJ: {{customer.number_register_customer}}</p>
-                        <p class="card-subtitle mb-2 text-muted">Telefone: {{customer.telephone_mobile}}</p>
-                        <p class="card-subtitle mb-4 text-muted">Email: {{customer.email}}</p>
-                        <div class="row justify-content-center">
-                            <a href="{{ url_for('equipment_summary', customer_id=customer.id) }}" class="card-link">Serviços</a>
-                            <a href="{{ url_for('customers_update', customer_id=customer.id) }}" class="card-link">Editar</a>
+
+            <div class="row justify-content-center px-1">
+                <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-{{customer.id}}">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <p class="card-title">CNPJ: {{customer.number_register_customer}}</p>
+                            <p class="card-subtitle mb-2 text-muted">Telefone: {{customer.telephone_mobile}}</p>
+                            <p class="card-subtitle mb-4 text-muted">Email: {{customer.email}}</p>
+                            <div class="row justify-content-center">
+                                <a class="btn btn-secondary btn-sm ml-3" href="{{ url_for('equipment_summary', customer_id=customer.id) }}" class="card-link">Serviços</a>
+                                <a class="btn btn-secondary btn-sm ml-3" href="{{ url_for('customers_update', customer_id=customer.id) }}" class="card-link">Editar</a>
+                                {% if customer.status_customer == "ATIVO" %}
+                                <a class="btn btn-secondary btn-sm ml-3" href="{{ url_for('customer_change_status', customer_id=customer.id) }}" class="card-link">Inativar</a>
+                                {% else %}
+                                <a class="btn btn-secondary btn-sm ml-3" href="{{ url_for('customer_change_status', customer_id=customer.id) }}" class="card-link">Ativar</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -52,26 +61,28 @@
 
         {% if type_data == 'usuarios' %}
         {%for customer in customers%}
-        <div class="row justify-content-center px-1">
-            <div class="col-lg-6">
-                <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{customer.username}}</button>
+        <div class="container">
+            <div class="row justify-content-center px-1">
+                <div class="col-lg-6">
+                    <button style="width: 100%; text-align: start;" class="mb-2 btn btn-outline-secondary mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-info-cliente-{{customer.id}}">{{customer.username}}</button>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center px-1">
-            <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-{{customer.id}}">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body">
-                        <p class="card-subtitle mb-2 text-muted">Email: {{customer.email }}</p>
-                        <p class="card-subtitle mb-2 text-muted">Tipo: {{customer.type_user }}</p>
-                        <div class="row justify-content-center">
-                            <a class="btn btn-outline-secondary btn-sm" href="{{url_for('user_update', user_id=customer.id)}}">Editar</a>
-                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/resetar-senha/{{customer.id}}';">Resetar senha</button>
-                            {% if customer.status_user == "ATIVO" %}
-                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status/{{customer.id}}';">Inativar</button>
-                            {% else %}
-                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status/{{customer.id}}';">Ativar</button>
-                            {% endif %}
-                            <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/deletar-usuario/{{customer.id}}';">Excluir</button>
+            <div class="row justify-content-center px-1">
+                <div class="collapse col-lg-6 text-center mb-2" id="collapse-info-cliente-{{customer.id}}">
+                    <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                            <p class="card-subtitle mb-2 text-muted">Email: {{customer.email }}</p>
+                            <p class="card-subtitle mb-2 text-muted">Tipo: {{customer.type_user }}</p>
+                            <div class="row justify-content-center">
+                                <a class="btn btn-outline-secondary btn-sm" href="{{url_for('user_update', user_id=customer.id)}}">Editar</a>
+                                <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/resetar-senha/{{customer.id}}';">Resetar senha</button>
+                                {% if customer.status_user == "ATIVO" %}
+                                <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status-usuario/{{customer.id}}';">Inativar</button>
+                                {% else %}
+                                <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/alterar-status-usuario/{{customer.id}}';">Ativar</button>
+                                {% endif %}
+                                <button class="btn ml-3 btn-outline-dark btn-sm" onclick="window.location.href = '/deletar-usuario/{{customer.id}}';">Excluir</button>
+                            </div>
                         </div>
                     </div>
                 </div>

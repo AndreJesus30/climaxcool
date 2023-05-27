@@ -49,6 +49,7 @@ class Equipments(database.Model):
     qr_code = database.Column(database.String, unique=True)
     status_equipment = database.Column(database.String, default="ATIVO")
     date_create = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+    # date_last_update = database.Column(database.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     id_customer = database.Column(database.Integer, database.ForeignKey('customers.id'), nullable=False)
     id_user = database.Column(database.Integer, database.ForeignKey('users.id'), nullable=False)
 

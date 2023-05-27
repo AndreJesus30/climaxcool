@@ -55,8 +55,8 @@
                 </div>
 
                 <div class="mt-3 container text-right">
-                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3 mr-1">Editar</button>
-                    <button style="color:black; font-size: 0.7rem;" type="button" class="btn badge-pill py-0 px-3">Excluir</button>
+                    <a style="color:black; font-size: 0.7rem;" class="btn btn-primary badge-pill py-0 px-3 mr-1" href="{{url_for('update_service', service_id=service.id, equipment_id=equipment.id, customer_id=customer.id)}}">Editar</a>
+                    <a style="color:black; font-size: 0.7rem;" class="btn btn-dark badge-pill py-0 px-3">Excluir</a>
                 </div>
             </div>
         </div>
