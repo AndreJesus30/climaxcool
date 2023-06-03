@@ -11,6 +11,10 @@
                     {{ form_equipments.csrf_token }}
                     <legend class="text-center">Cadastro de Ar Condicionado</legend>
                     <fieldset>
+                        <div class="form-group mt-1 mx-1">
+                            {{ form_equipments.model_equipment.label(class="form-label") }}
+                            {{ form_equipments.model_equipment(class="form-control px-2", rows="1") }}
+                        </div>
                         <div class="row form-group mt-1 mx-1">
                             {{ form_equipments.brand_equipment.label(class="form-label") }}
                             {% if form_equipments.brand_equipment.errors %}

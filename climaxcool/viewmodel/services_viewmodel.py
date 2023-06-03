@@ -152,6 +152,7 @@ class Services_ViewModel():
                 service_selected.service = text_services
                 service_selected.annotations = form_service.annotations.data 
                 service_selected.price = form_service.price.data
+                service_selected.date_last_update = datetime.utcnow()
                 
                 try:
                     database.session.commit()

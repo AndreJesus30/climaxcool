@@ -1,0 +1,78 @@
+
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    type_user TEXT NOT NULL,
+    username TEXT NOT NULL UNIQUE,
+    email TEXT UNIQUE,
+    password TEXT NOT NULL,
+    status_user TEXT DEFAULT 'ATIVO',
+    permission_user INTEGER DEFAULT 0,
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_update TIMESTAMP,
+    id_customer INTEGER NOT NULL,
+);
+
+ALTER TABLE Users
+ADD CONSTRAINT fk_users_customers
+    FOREIGN KEY (id_customer)
+    REFERENCES Customers (id);
+
+ALTER TABLE Users
+DROP CONSTRAINT fk_users_customers;
+
+CREATE TABLE Customers (
+    id SERIAL PRIMARY KEY,
+    type_customer TEXT NOT NULL,
+    number_register_customer TEXT UNIQUE,
+    name_customer TEXT NOT NULL,
+    name_responsible TEXT,
+    email TEXT,
+    address TEXT,
+    telephone_fixed TEXT,
+    telephone_mobile TEXT NOT NULL,
+    reference_point TEXT,
+    status_customer TEXT DEFAULT 'ATIVO',
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_update TIMESTAMP,
+    id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_user) REFERENCES Users (id)
+);
+
+ALTER TABLE Customers
+ADD CONSTRAINT fk_customers_users
+    FOREIGN KEY (id_user)
+    REFERENCES Users (id);
+
+
+CREATE TABLE Equipments (
+    id SERIAL PRIMARY KEY,
+    name_equipment TEXT NOT NULL,
+    model_equipment TEXT NOT NULL,
+    brand_equipment TEXT NOT NULL,
+    btus INTEGER NOT NULL,
+    address TEXT NOT NULL,
+    qr_code TEXT UNIQUE,
+    status_equipment TEXT DEFAULT 'ATIVO',
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_update TIMESTAMP,
+    id_customer INTEGER NOT NULL, 
+    id_user INTEGER NOT NULL,
+    FOREIGN KEY (id_customer) REFERENCES Customers (id),
+    FOREIGN KEY (id_user) REFERENCES Users (id)
+);
+
+
+CREATE TABLE Services (
+    id SERIAL PRIMARY KEY,
+    service TEXT NOT NULL,
+    date_create TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    date_last_update TIMESTAMP,
+    annotations TEXT,
+    price INTEGER,
+    id_customer INTEGER NOT NULL,
+    id_equipment INTEGER NOT NULL,
+    id_expert INTEGER NOT NULL,
+    FOREIGN KEY (id_customer) REFERENCES Customers (id),
+    FOREIGN KEY (id_equipment) REFERENCES Equipments (id),
+    FOREIGN KEY (id_expert) REFERENCES Users (id)
+);

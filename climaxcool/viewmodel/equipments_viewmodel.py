@@ -30,7 +30,8 @@ class Equipments_ViewModel():
                 id_customer = Customers.query.filter_by(name_customer=name_customer).first().id;
                 
                 new_equipments = Equipments(
-                    name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,
+                    name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.model_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,
+                    model_equipment = form_equipments.model_equipment.data,
                     btus_equipment=form_equipments.btus_equipment.data,
                     brand_equipment=form_equipments.brand_equipment.data, 
                     address=form_equipments.address.data,
@@ -53,7 +54,8 @@ class Equipments_ViewModel():
             if form_equipments.validate_on_submit():
                 
                 new_equipments = Equipments(
-                    name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,
+                    name_equipment= form_equipments.brand_equipment.data +" - "+ form_equipments.model_equipment.data +" - "+ form_equipments.btus_equipment.data +" BTUs - "+form_equipments.address.data,   
+                    model_equipment = form_equipments.model_equipment.data,
                     btus_equipment=form_equipments.btus_equipment.data,
                     brand_equipment=form_equipments.brand_equipment.data, 
                     address=form_equipments.address.data,
@@ -101,6 +103,7 @@ class Equipments_ViewModel():
         print(customer.name_customer)
 
         form_equipment = FormEquipmentsRegistration(
+            model_equipment = equipment.model_equipment,
             brand_equipment = equipment.brand_equipment,
             btus_equipment = equipment.btus_equipment,
             address = equipment.address,
@@ -113,12 +116,16 @@ class Equipments_ViewModel():
 
         if form_equipment.validate_on_submit():
             print('form_validado')
+            name = form_equipment.brand_equipment.data +" - "+ form_equipment.model_equipment.data +" - "+ form_equipment.btus_equipment.data +" BTUs - "+form_equipment.address.data
+
+            equipment.name_equipment=name
+            equipment.model_equipment=form_equipment.model_equipment.data
             equipment.brand_equipment=form_equipment.brand_equipment.data
             equipment.btus_equipment=form_equipment.btus_equipment.data
             equipment.address=form_equipment.address.data
             equipment.qr_code= None if not form_equipment.qr_code.data else form_equipment.qr_code.data
             equipment.status_equipment=form_equipment.status_equipment.data
-        #   equipment.date_last_update= datetime.utcnow()
+            equipment.date_last_update= datetime.utcnow()
 
             repo_equipments.commit_update_equipment(customer.id, 'Equipamento editado com sucesso.', 'Houve um problema na edição, verifique os dados e tente novamenteeee.')
             return redirect(url_for('equipment_summary', customer_id=customer.id))
@@ -135,10 +142,12 @@ class Equipments_ViewModel():
 
         if equipment and equipment.status_equipment == "ATIVO":
             equipment.status_equipment = "INATIVO"
+            equipment.date_last_update= datetime.utcnow()
             repo_equipments.commit_update_equipment(customer.id,'Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
             return redirect(url_for('equipment_summary', customer_id=customer.id))
 
         else:
             equipment.status_equipment = "ATIVO"
+            equipment.date_last_update= datetime.utcnow()
             repo_equipments.commit_update_equipment(customer.id,'Status alterado com sucesso', 'Houve um erro ao tentar alterar o status')
             return redirect(url_for('equipment_summary', customer_id=customer.id))  

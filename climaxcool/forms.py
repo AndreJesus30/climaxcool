@@ -44,7 +44,7 @@ class FormChangePassword(FlaskForm):
 class FormCustomerRegistration(FlaskForm):
     edit_mode = HiddenField()
     type_customer = RadioField('Tipo de Cliente', choices=["Pessoa Jurídica", "Pessoa Física"], validators=[DataRequired()]) 
-    number_register_customer =  StringField('CNPJ')
+    number_register_customer = StringField('CNPJ')
     name_customer = StringField('Nome Fantasia', validators=[DataRequired()])
     name_responsible = StringField('Nome do Responsável')
     email = StringField('E-mail', validators=[DataRequired(), Email()])
@@ -103,11 +103,14 @@ class FormUsersRegistration(FlaskForm):
             raise ValidationError('Esse e-mail já foi cadastrado em outro usuário')
         pass    
 
+list_models = ["","Cassete","Duto","Janela","Multi Split","Split","Split inverter","Piso Teto","Teto"]
 list_brands = ["","Agratto","Britânia","Car Bluetooth","Comfee","Consul","Daikin","Elgin","Equation","Fontaine","Fujitsu","Philco","LG","Samsung","Carrier","Fujitsu","Gree","Electrolux","Springer Midea","TCL", "Outra"]
 list_btus = [7000,7500,9000,12000,15000,16000,18000,20000,24000,28000,30000,32000,36000,40000,42000,48000,58000,60000]
 
+
 class FormEquipmentsRegistration(FlaskForm):
     edit_mode = HiddenField()
+    model_equipment = SelectField('Modelo', validators=[DataRequired()], choices=list_models)
     brand_equipment = SelectField('Marca', validators=[DataRequired()], choices=list_brands)
     btus_equipment = SelectField('BTUs', validators=[DataRequired()], choices=list_btus) 
     address = TextAreaField('Local', validators=[DataRequired()])
